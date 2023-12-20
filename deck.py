@@ -27,8 +27,11 @@ class Deck:
         return len(self._cards)
     
     def upgrade(self, card):
-        random.randint(1,2)
         
+        card = random.randint(1,2)
+        if card == 1: 
+        
+
 
 
 
