@@ -28,12 +28,30 @@ class Deck:
     
     def upgrade(self, card):
         cards = random.randint(1,2)
-        upgrade_power += 1
-        upgrade_hp += 1
         if cards == 1:
-            card.power(upgrade_power)
+            card._power += 1
+            print("Your power has upgrade to 1\n")
         else:
-            card._max_health(upgrade_hp)
+            card._max_health += 1
+            print("Your max health has upgrade to 1\n")
+        
+        player_choice = input(f" would you like to upgrade again? 50% change\n Y/N")
+        chance = 50
+
+        while player_choice == 'Y':
+
+            cards = random.randint(1,2)
+            if cards == 1:
+                print(hello)
+
+
+            
+
+
+
+
+        
+        
 
 
 
