@@ -38,3 +38,6 @@ class Card:
     def attack(self, entity, dmg):
         entity.take_damage(dmg)
         return f"{entity.name} delts {dmg} to {self.name}"
+
+    def __str__(self):
+        return f"{self.name} \n{self._hp}/{self._max_health} \nSigil: {self._sigil}"
