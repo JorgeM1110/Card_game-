@@ -27,9 +27,17 @@ class Deck:
         return len(self._cards)
     
     def upgrade(self, card):
-        
-        card = random.randint(1,2)
-        if card == 1: 
+
+        cards = random.randint(1,2)
+        upgrade_power += 1
+        upgrade_hp += 1
+        if cards == 1:
+            card.power(upgrade_power)
+        else:
+            card._max_health(upgrade_hp)
+
+
+
         
 
 
