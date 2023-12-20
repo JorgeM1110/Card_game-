@@ -1,8 +1,12 @@
+import card 
+
 
 class Deck:
 
     def __init__(self):
-        print("hello")
+        self._cards = []
+
+    
 
     
 
