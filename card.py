@@ -14,6 +14,7 @@ class Card:
         self._cost = cost
         self._power = power
         self._max_health = max_health
+        self._hp = max_health
 
     @property
     def name(self):
@@ -32,7 +33,8 @@ class Card:
             self._hp -= dmg
         else:
             self._hp = 0
-        return f"{self._name} takes {dmg} damage"
+        return f"{self.name} takes {dmg} damage"
 
     def attack(self, entity, dmg):
         entity.take_damage(dmg)
+        return f"{entity.name} delts {dmg} to {self.name}"

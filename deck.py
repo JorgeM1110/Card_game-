@@ -30,19 +30,3 @@ class Deck:
         
         card = random.randint(1,2)
         if card == 1: 
-        
-
-
-
-
-
-
-
-    
-
-    
-
-
-    
-
-
