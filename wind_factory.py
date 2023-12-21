@@ -1,5 +1,8 @@
 import card_factory
 import random
+import raven
+import kingfisher
+import magpie
 
 class WindFactory(card_factory.CardFactory):
     """
@@ -14,7 +17,7 @@ class WindFactory(card_factory.CardFactory):
             return raven.Raven()
         
         elif wind_enemies == 2:
-            return KingFisher.kingfisher()
+            return kingfisher.kingfisher()
         
         elif wind_enemies == 3:
-            return Magpie.Magpie()
+            return magpie.MagPie()

@@ -1,5 +1,8 @@
 import card_factory
 import random
+import bear
+import skunk
+import snake
 
 class GrassFactory(card_factory.CardFactory):
     """
