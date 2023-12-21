@@ -1,6 +1,6 @@
 import card_factory
 import random
-import turtle
+import snappingturtles
 import bullfrog
 import shark
 
@@ -14,7 +14,7 @@ class WaterFactory(card_factory.CardFactory):
         water_enemies = random.randint(1,3)
 
         if water_enemies == 1:
-            return turtle.Turtle()
+            return snappingturtles.SnappingTurtles()
         
         elif water_enemies == 2:
             return bullfrog.BullFrog()
