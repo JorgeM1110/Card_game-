@@ -1,6 +1,5 @@
 import card
 
-
 class Skunk(card.Card):
 
     def __init__(self):
