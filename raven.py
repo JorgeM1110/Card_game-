@@ -7,7 +7,7 @@ class Raven(card.Card):
         sigil = "Airborne"
         super.__init__("Raven", max_hp, sigil)
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         damage = 2
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."

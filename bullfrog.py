@@ -7,7 +7,7 @@ class BullFrog(card.Card):
         sigil = "Might Leap"
         super.__init__("BullFrog", max_hp, sigil)
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         damage = 1
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."

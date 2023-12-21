@@ -91,7 +91,7 @@ class Deck:
                         print("Your max health has upgrade to " + card._max_health + "\n")
                 else:
                     card.pop(0)
-                    print("You got too Greedy")
+                    print("Your time has come to end")
 
             elif chance == 3:
                 if random_num <= 3:
@@ -119,7 +119,7 @@ class Deck:
                     print("You fail me") 
 
             chance //= 2
-            player_choice = input(f" would you like to upgrade again? 50% change\n Y/N")
+            player_choice = input(f" would you like to upgrade again? " + chance + " {%} change\n Y/N")
 
     def sacrifice(self, deadcard, gaincard):
         if deadcard in self._cards:

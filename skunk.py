@@ -7,7 +7,7 @@ class Skunk(card.Card):
         sigil = "Stinky"
         super.__init__("Skunk", max_hp, sigil)
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         damage = 0
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."

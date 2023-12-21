@@ -7,7 +7,7 @@ class Shark(card.Card):
         sigil = " Waterborne"
         super.__init__("Shark", max_hp, sigil)
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         damage = 4
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."

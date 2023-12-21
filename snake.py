@@ -7,7 +7,7 @@ class Snake(card.Card):
         sigil = "Touch of Death"
         super.__init__("Snake", max_hp, sigil)
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         damage = 1
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
