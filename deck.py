@@ -33,7 +33,7 @@ class Deck:
             card._power += 1
             print("Your power has upgrade to " + card._power + "\n")
         else:
-            card._max_health += 1
+            card._max_health += 2
             print("Your max health has upgrade to " + card._max_health + "\n")
         
         player_choice = input(f" would you like to upgrade again? 50% change\n Y/N")

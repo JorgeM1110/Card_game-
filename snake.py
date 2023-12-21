@@ -11,3 +11,6 @@ class Snake(card.Card):
         damage = 1
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
+
+    def desc(self):
+        return "This card instantly kills any card it damages."

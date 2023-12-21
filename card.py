@@ -41,8 +41,12 @@ class Card:
             self._hp = 0
         return f"{self.name} takes {dmg} damage"
 
-    def attack(self, entity, dmg):
+    def attack(self, entity):
         """ Deals damage to opposing entity """
+        pass
+
+    def desc(self):
+        """ Description of the sigil """
         pass
 
     def __str__(self):

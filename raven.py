@@ -11,3 +11,6 @@ class Raven(card.Card):
         damage = 2
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
+
+    def desc(self):
+        return "This card will ignore opposing cards and strike an opponent directly."

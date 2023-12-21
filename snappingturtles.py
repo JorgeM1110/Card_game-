@@ -12,6 +12,9 @@ class SnappingTurtles(card.Card):
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
 
+    def desc(self):
+        return "This card blocks opposing Airborne creatures."
+
 
         
        

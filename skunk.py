@@ -11,3 +11,6 @@ class Skunk(card.Card):
         damage = 0
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
+
+    def desc(self):
+        return "The creature opposing this card loses 1 Power."

@@ -11,3 +11,6 @@ class Bear(card.Card):
         damage = 4
         entity.take_damage(damage)
         return self._name + " attacks a " + entity._name + " for " + str(damage) + " damage."
+
+    def desc(self):
+        return "This card has no sigil"
