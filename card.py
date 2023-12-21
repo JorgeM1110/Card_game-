@@ -9,13 +9,14 @@ class Card:
         _sigil (string): sigil of the card
     """
 
-    def __init__(self, name, cost, power, max_health):
+    def __init__(self, name, cost, power, max_health, sigil):
         """ Initializes attributes """
         self._name = name
         self._cost = cost
         self._power = power
         self._max_health = max_health
         self._hp = max_health
+        self._sigil = sigil
 
     @property
     def name(self):
@@ -42,8 +43,7 @@ class Card:
 
     def attack(self, entity, dmg):
         """ Deals damage to opposing entity """
-        entity.take_damage(dmg)
-        return f"{entity.name} delts {dmg} to {self.name}"
+        pass
 
     def __str__(self):
         """ returns name, health, and sigil """
