@@ -1,6 +1,5 @@
 import card
 
-
 class Bear(card.Card):
 
     def __init__(self):

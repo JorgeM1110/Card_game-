@@ -1,6 +1,6 @@
 import card
 
-class kingFisher(card.Card):
+class KingFisher(card.Card):
 
     def __init__(self):
         max_hp = 1

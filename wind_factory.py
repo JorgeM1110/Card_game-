@@ -17,7 +17,7 @@ class WindFactory(card_factory.CardFactory):
             return raven.Raven()
         
         elif wind_enemies == 2:
-            return kingfisher.kingfisher()
+            return kingfisher.KingFisher()
         
         elif wind_enemies == 3:
             return magpie.MagPie()
