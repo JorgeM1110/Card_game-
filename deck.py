@@ -117,7 +117,12 @@ class Deck:
                 else:
                     card.pop(0)
                     print("You fail me") 
-                    
+
             chance //= 2
             player_choice = input(f" would you like to upgrade again? 50% change\n Y/N")
+
+    def sacrifice(self, deadcard, gaincard):
+        if deadcard in self._cards:
+            self._cards.remove(deadcard)
+            gaincard.sigil = deadcard.sigil
 
