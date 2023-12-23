@@ -10,3 +10,6 @@ class Shark(card.Card):
     def attack(self, entity):
         entity.take_damage(self._power)
         return self._name + " attacks a " + entity._name + " for " + str(self._power) + " damage."
+    
+    def desc(self):
+        return "Dives underwater, unkillable unless attack is reflected or gets hurt while doing damage."

@@ -10,3 +10,6 @@ class KingFisher(card.Card):
     def attack(self, entity):
         entity.take_damage(self._power)
         return self._name + " attacks a " + entity._name + " for " + str(self._power) + " damage."
+    
+    def desc(self):
+        return " Waterborne - Dives underwater, unkillable unless attack is reflected or gets hurt while doing damage\n Airborne - When played, choose a card from your deck to be drawn"
