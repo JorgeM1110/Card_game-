@@ -1,11 +1,26 @@
 import card 
 import random
-
+import bear
+import bullfrog
+import skunk 
+import snake
+import shark
+import raven
+import kingfisher
+import magpie
+import snappingturtle
 
 class Deck:
 
     def __init__(self):
         self._cards = []
+
+        enemies = [bear.Bear(), snake.Snake(), skunk.Skunk(), 
+                   bullfrog.BullFrog(), shark.Shark(), snappingturtle.SnappingTurtle(), 
+                   kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()] 
+        
+
+
 
     def shuffle(self):
         """
@@ -33,7 +48,7 @@ class Deck:
             card._power += 1
             print("Your power has upgrade to " + card._power + "\n")
         else:
-            card._max_health += 2
+            card._max_health += 1
             print("Your max health has upgrade to " + card._max_health + "\n")
         
         player_choice = input(f" would you like to upgrade again? 50% change\n Y/N")
