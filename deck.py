@@ -17,7 +17,10 @@ class Deck:
 
         enemies = [bear.Bear(), snake.Snake(), skunk.Skunk(), 
                    bullfrog.BullFrog(), shark.Shark(), snappingturtle.SnappingTurtle(), 
-                   kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()] 
+                   kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()]
+        for i in enemies:
+            for j in range(3):
+                self._cards.append(i)
         
 
 
