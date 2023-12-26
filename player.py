@@ -17,6 +17,9 @@ class Player():
         for item in self._items:
             print(item, end=" ")
 
+    def shopItem(self):
+        item = []
+
     def displayDeck(self):
         for card in self._deck:
             print(card, end=" ")
