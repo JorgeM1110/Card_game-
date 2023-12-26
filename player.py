@@ -15,7 +15,7 @@ class Player():
     
     def displayItems(self):
         for item in self._items:
-            print(items, end=" ")
+            print(item, end=" ")
 
     def displayDeck(self):
         for card in self._deck:

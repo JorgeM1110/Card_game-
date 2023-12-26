@@ -20,6 +20,13 @@ class Boss:
     def mechanic(self):
         return self._mechanic
     
+    def __str__(self):
+        return "You're face with " + self._name + " the boss who will destroy you!"
+    
+    def displayDeck(self):
+        for card in self._deck:
+            print(card, end=" ")
+    
     def change_state(self, new_state):
         """
         updates the boss state to the new state.
@@ -36,7 +43,7 @@ class Boss:
         """
         calls the mechanic method for whichever state the boss is in.
         """
-        return self._sate.mechanic(self)
+        return self._state.mechanic(self)
     
 
 

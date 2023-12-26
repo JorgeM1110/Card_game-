@@ -22,9 +22,6 @@ class Deck:
             for j in range(3):
                 self._cards.append(i)
         
-
-
-
     def shuffle(self):
         """
         shuffles the deck.
