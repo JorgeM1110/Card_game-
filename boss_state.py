@@ -1,6 +1,6 @@
 import abc
 
-class BossSate(abc.ABC):
+class BossState(abc.ABC):
 
     @abc.abstractmethod
     def plays(self):
