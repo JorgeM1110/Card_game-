@@ -44,8 +44,8 @@ class Player():
 
     def __str__(self):
         return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.displayDeck()}"
-    
-    def go_north(self):
+  
+    def go_forward(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
             if self._location[0] > 0:
@@ -56,19 +56,7 @@ class Player():
                 return 'o'
         return 'o'
 
-    def go_south(self):
-        m = map.Map()
-        if len(self._location) - 1 < len(m) - 1:
-            if self._location[0] < 4:
-                self._location[0] += 1
-                m.reveal(self.location)
-                return m[self.location[0]][self.location[1]]
-            else:
-                return 'o'
-        else:
-            return 'o'
-
-    def go_east(self):
+    def go_right(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
             if self._location[1] < 4:
@@ -80,7 +68,7 @@ class Player():
         else:
             return 'o'
 
-    def go_west(self):
+    def go_left(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
             if self._location[1] > 0:

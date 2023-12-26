@@ -5,7 +5,7 @@ class Skunk(card.Card):
     def __init__(self):
         max_hp = 3
         sigil = "Stinky"
-        super.__init__("Skunk", 1, 0, max_hp, sigil)
+        super().__init__("Skunk", 1, 0, max_hp, sigil)
 
     def attack(self, entity):
         entity.take_damage(self._power)

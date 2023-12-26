@@ -41,6 +41,10 @@ class Deck:
         return the number of cards remaining in the deck.
         """
         return len(self._cards)
+
+    def __str__(self):
+        for card in self._cards:
+            print(card)
     
     def upgrade(self, card):
         cards = random.randint(1,2)

@@ -5,7 +5,7 @@ class Bear(card.Card):
     def __init__(self):
         max_hp = 6
         sigil = "None"
-        super.__init__("Bear", 3, 4, max_hp, sigil)
+        super().__init__("Bear", 3, 4, max_hp, sigil)
 
     def attack(self, entity):
         entity.take_damage(self._power)

@@ -5,7 +5,7 @@ class MagPie(card.Card):
     def __init__(self):
         max_hp = 1
         sigil = "Airborne"
-        super.__init__("MagPie", 2, 1, max_hp, sigil)
+        super().__init__("MagPie", 2, 1, max_hp, sigil)
 
     def attack(self, entity):
         entity.take_damage(self._power)

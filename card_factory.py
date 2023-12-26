@@ -1,8 +1,8 @@
 import abc 
 
-class CardFactory(abc.Abc):
+class CardFactory(abc.ABC):
 
-    @abstractmethod
+    @abc.abstractmethod
     def create_random_card(self):
         """
         Abstract method (no code) that each concrete 

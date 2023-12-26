@@ -16,7 +16,7 @@ class Map:
     def load_map(self, map_num):
         self._map = []
         self._revealed = []
-        map = f'map{str(map_num)}.txt'
+        map = f'map1.txt'
         with open(map, "r") as f:
             for line in f:
                 self._map.append(list(line.strip()))
@@ -37,12 +37,12 @@ class Map:
         locations are ‘x’s, and the hero’s location is a ‘*’
         """
         str_map = ""
-        for i in range(len(self.map)):
-            for j in range(len(self.map[i])):
+        for i in range(len(self._map)):
+            for j in range(len(self._map[i])):
                 if i == loc[0] and j == loc[1]:  
                     str_map += "@"
                 else:
-                    str_map += ""
+                    str_map += self._map[i][j]
             str_map += "\n"
         return str_map
 
