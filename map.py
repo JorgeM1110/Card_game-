@@ -31,7 +31,22 @@ class Map:
         return len(self._map)
     
     def show_map(self, loc):
-        print("hello")
+        """
+        returns the map as a string in the format of a ? matrix of
+        characters where revealed locations are the characters from the map, unrevealed
+        locations are ‘x’s, and the hero’s location is a ‘*’
+        """
+        str_map = ""
+        for i in range(len(self.map)):
+            for j in range(len(self.map[i])):
+                if i == loc[0] and j == loc[1]:  
+                    str_map += "@"
+                elif self.revealed[i][j]: 
+                    str_map += self.map[i][j]
+                else:
+                    str_map += ""
+            str_map += "\n"
+        return str_map
 
     def reveal(self, loc):
         """
