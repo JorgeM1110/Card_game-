@@ -145,3 +145,7 @@ class Deck:
             self._cards.remove(deadcard)
             gaincard.sigil = deadcard.sigil
 
+    def removeCard(self, index):
+        print(self._deck[index].name, " is removed")
+        return self._deck.pop(index)
+
