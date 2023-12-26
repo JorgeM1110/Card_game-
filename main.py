@@ -9,7 +9,7 @@ def main():
     print("JOIN THE ORG DAMMIT")
     print("YES")
 
-    print("~~~INSCYPTION~~~")
+    print("~~~INSCRYPTION~~~")
 
 
 main()

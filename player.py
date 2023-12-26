@@ -18,7 +18,25 @@ class Player():
             print(item, end=" ")
 
     def shopItem(self):
-        item = []
+        print("Welcome to meh shop! \nPick whichever tickles your fancy!")
+        print("1. Dagger - Cut out your eye and place it on scale, giving you one points toward victory.")
+        print("2. Boulder - Place it to block enemies attack up to 5 hit points")
+        print("3. Squirrel Bottle - A squirell will go right into your hand")
+
+        flag = False
+        while not flag:
+            choice = input("Your choice: ")
+            if choice == "1":
+                self._items.append("Dagger")
+                flag = True
+            elif choice == "2":
+                self._items.append("Boulder")
+                flag = True
+            elif choice == "3":
+                self._items.append("Squirrel Bottle")
+                flag = True
+            else:
+                print("Invalid input")
 
     def displayDeck(self):
         for card in self._deck:
