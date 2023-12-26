@@ -30,4 +30,3 @@ def battle(hero, boss):
             if card:
                 upcomingAttack.append(card)
         
-        
