@@ -31,14 +31,20 @@ class Map:
         return len(self._map)
     
     def show_map(self, loc):
-        print("hello")
-
-    def reveal(self, loc):
         """
-        sets the value in the 2D revealed list at the specified location to
-        True.
+        returns the map as a string in the format of a 6x6 matrix of
+        characters where revealed locations are the characters from the map, unrevealed
+        locations are ‘x’s, and the hero’s location is a ‘*’
         """
-        self.revealed[loc[0]][loc[1]] = True
+        str_map = ""
+        for i in range(len(self.map)):
+            for j in range(len(self.map[i])):
+                if i == loc[0] and j == loc[1]:  
+                    str_map += "@"
+                else:
+                    str_map += ""
+            str_map += "\n"
+        return str_map
 
     def remove_at_loc(self,loc):
         """
