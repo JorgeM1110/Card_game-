@@ -29,9 +29,9 @@ def battle(hero, boss):
 
     scale = 0
     turn = 0 
-    currPlayer = []
-    upcomingAttack = []
-    currAttack = []
+    currPlayer = [None, None, None, None]
+    upcomingAttack = [None, None, None, None]
+    currAttack = [None, None, None, None]
     while scale > -5 and scale < 5:
         if turn == 0:
             # Drawing 
@@ -39,31 +39,59 @@ def battle(hero, boss):
             choice = input("Choice: ")
             if choice == "1":
                 playerHand.append(random_card(hero._deck))
+                correctInput = True
             elif choice == "2":
                 if squirrelCount > 0:
                     playerHand.append(squirrel)
                     squirrelCount -= 1
-            
-            print("1. Place a card down\n 2. End turn")
-            choice = input("Enter choice: ")
-            if choice == "1":
-                print("Choose a card from your hand")
-                counter = 1
-                for card in playerHand:
-                    print(f"{counter}. {card.name} cost: {card.cost} hp: {card.hp} power: {card.power} sigil: {card.sigil}")
-                    counter += 1
-                num = input("Enter choice: ") # <- This doesn't check if the user input the right number
-                pickedCard = playerHand[num]
-                if pickedCard.cost == 0:
-                    print("Where would you like to place the card? Slot 1, 2, 3, or 4")
-                    choice = input("Enter choice: ")
-                    if currPlayer[int(choice) - 1] is None:
-                        currPlayer[int(choice) - 1] = playerHand[int(choice) - 1]
-                    else:
-                        print("There is already a card in that slot, pick somewhere else.")
+                    correctInput = True
+            else:
+                print("Incorrect input: either 1 or 2")
 
-            elif choice == "2":
-                turn = 1
+            # Place a card down (later add an option for add item)
+            done = False
+            choice = input("Enter choice: ")
+            while not done:
+                print("1. Place a card down\n 2. End turn")
+                if choice == "1":
+                    print("Choose a card from your hand")
+                    counter = 1
+                    for card in playerHand:
+                        print(f"{counter}. {card}")
+                        counter += 1
+                    num = input("Enter choice: ") # <- This doesn't check if the user input the right number
+                    pickedCard = playerHand[num]
+                    if pickedCard.cost > 0:
+                        print(f"This card needs {pickedCard.cost} sacerfices")
+                        currCost = 0
+                        while currCost < pickedCard.cost:
+                            print("Which card would you sacerfice?")
+                            counter = 1
+                            for card in currPlayer:
+                                if card is not None:
+                                    print(f"{counter}. {card}") 
+                                    counter += 1 
+                                else:
+                                    print(f"{counter}. No card")
+                            choice = input("Enter choice: ") # No checking
+                            if currPlayer[int(choice) - 1] is not None:
+                                print("You sacerficed the {currPlayer[int(choice) - 1].name}")
+                                currCost += 1
+                                currPlayer.pop(int(choice) - 1)
+                            else:
+                                print("There's no card")
+                    print("Where would you like to place the card? Slot 1, 2, 3, or 4")
+                    placeCard = False
+                    while not placeCard:
+                        choice = input("Enter choice: ")
+                        if currPlayer[int(choice) - 1] is None:
+                            currPlayer[int(choice) - 1] = playerHand[int(choice) - 1]
+                            placeCard = True
+                        else:
+                            print("There is already a card in that slot, pick somewhere else.")
+                elif choice == "2":
+                    done = True
+                    turn = 1
 
     # To-do
     """
@@ -80,7 +108,8 @@ def battle(hero, boss):
             - Randomly choose an enemy card and place it in it's upcomingAttack where the player can see what is comming next
             - Move the upcomingAttack to currAttack and replace upcomingAttack if we want it to continue, so we can have 2 - 3 rounds where the boss has a chance to places a card 
             - Deals damage to player or player's card 
-        Once everything works (so just simple health, power, and cost), work on sigil 
+        Once everything works (so just simple health, power, and cost), work on sigil, and items
+        Maybe add a put down card, if the user chooses a card but then changes their mind
     """
 
             
