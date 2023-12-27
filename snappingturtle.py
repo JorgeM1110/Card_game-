@@ -4,7 +4,7 @@ class SnappingTurtle(card.Card):
 
     def __init__(self):
         max_hp = 6
-        sigil = "none"
+        sigil = "None"
         super().__init__("SnappingTurtle", 2, 1, max_hp, sigil)
 
     def attack(self, entity):
