@@ -8,10 +8,15 @@ class Player():
         self._deck = deck.Deck()
         self._items = []
         self._location = [0, 0]
+        self._currCost = 0
 
     @property
     def location(self):
         return self._location
+
+    @property
+    def currCost(self):
+        return self._currCost
     
     def displayItems(self):
         for item in self._items:

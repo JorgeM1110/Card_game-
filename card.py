@@ -33,6 +33,16 @@ class Card:
         """ Getter for power """
         return self._power
 
+    @property
+    def cost(self):
+        """ Getter for cost """
+        return self._cost
+
+    @property
+    def sigil(self):
+        """ Getter for sigil """
+        return self._sigil
+
     def take_damage(self, dmg):
         """ Takes damge, subtracts health from damage """
         if self._hp > dmg:

@@ -1,4 +1,8 @@
 import random
+import card
+import player
+import boss
+
 
 def random_card(deck):
     if len(deck) == 0:
@@ -14,13 +18,73 @@ def show_hand(hand):
 
 def battle(hero, boss):
     print("~~~ Battle Start! ~~~~")
-
-    # Player hand
+    
+    # Player starting hand
     squirrelCount = 20
+    squirrel = card.Card("squirrel", 0, 0, 1, None)
+    playerHand = []
     hero._deck.shuffle()
     for _ in range(4):
-        heroHand = random_card(hero._deck)
-    
+        playerHand.append(random_card(hero._deck))
+
+    scale = 0
+    turn = 0 
+    currPlayer = []
+    upcomingAttack = []
+    currAttack = []
+    while scale > -5 and scale < 5:
+        if turn == 0:
+            # Drawing 
+            print("1. Draw from deck \n2. Draw a squirrel")
+            choice = input("Choice: ")
+            if choice == "1":
+                playerHand.append(random_card(hero._deck))
+            elif choice == "2":
+                if squirrelCount > 0:
+                    playerHand.append(squirrel)
+                    squirrelCount -= 1
+            
+            print("1. Place a card down\n 2. End turn")
+            choice = input("Enter choice: ")
+            if choice == "1":
+                print("Choose a card from your hand")
+                counter = 1
+                for card in playerHand:
+                    print(f"{counter}. {card.name} cost: {card.cost} hp: {card.hp} power: {card.power} sigil: {card.sigil}")
+                    counter += 1
+                num = input("Enter choice: ") # <- This doesn't check if the user input the right number
+                pickedCard = playerHand[num]
+                if pickedCard.cost == 0:
+                    print("Where would you like to place the card? Slot 1, 2, 3, or 4")
+                    choice = input("Enter choice: ")
+                    if currPlayer[int(choice) - 1] is None:
+                        currPlayer[int(choice) - 1] = playerHand[int(choice) - 1]
+                    else:
+                        print("There is already a card in that slot, pick somewhere else.")
+
+            elif choice == "2":
+                turn = 1
+
+    # To-do
+    """
+        add a loop to every input checking if the user input what we expect or make a check_input
+        player sacerficing a card to gain a cost, cost is per turn meaning the cost gets reset to 0 every turn (If we want to follow how the actual game works)
+            - Each card sacerficed in play doesn't return to deck (Unless we want to add it) but gets added back after battle
+            - Each card will equal to 1 sacerfice, doesn't matter how much power or health it does 
+        placing a card in the currPlayer where the card is now in play and will take and deal damage
+            - checking if a card is already there (don't want to overwrite)
+            - If currPlayer is full, player can only either sacerfice, draw a squirrel, or end turn 
+        At each end turn, whoever turn is it, their card deals damage to the opposing entity 
+            - Add/Subtract to scale if there is no card blocking or the card attack is airborne and the card opposing can't block it 
+        add the boss turn
+            - Randomly choose an enemy card and place it in it's upcomingAttack where the player can see what is comming next
+            - Move the upcomingAttack to currAttack and replace upcomingAttack if we want it to continue, so we can have 2 - 3 rounds where the boss has a chance to places a card 
+            - Deals damage to player or player's card 
+        Once everything works (so just simple health, power, and cost), work on sigil 
+    """
+
+            
+    # Don't worry about this part
     # Cards that will be in play next round
     boss._deck.shuffle()
     upcomingAttack = []
