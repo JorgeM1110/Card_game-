@@ -66,7 +66,7 @@ class Player():
         if len(self._location) - 1 < len(m) - 1:
             if self._location[1] < 4:
                 self._location[1] += 1
-                m.reveal(self.location)
+                self._location[0] -= 1 
                 return m[self.location[0]][self.location[1]]
             else:
                 return 'o'
@@ -78,7 +78,7 @@ class Player():
         if len(self._location) - 1 < len(m) - 1:
             if self._location[1] > 0:
                 self._location[1] -= 1
-                m.reveal(self.location)
+                self._location[0] -= 1
                 return m[self.location[0]][self.location[1]]
             else:
                 return 'o'
