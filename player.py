@@ -3,11 +3,11 @@ import map
 import random
 
 class Player():
-    def __init__(self, name, items):
+    def __init__(self, name):
         self._name = name
         self._deck = deck.Deck()
         self._items = []
-        self._location = [0, 0]
+        self._location = [5,2]
         self._currCost = 0
 
     @property
@@ -46,6 +46,7 @@ class Player():
     def displayDeck(self):
         for card in self._deck:
             print(card, end=" ")
+            count += 1
 
     def __str__(self):
         return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.displayDeck()}"
