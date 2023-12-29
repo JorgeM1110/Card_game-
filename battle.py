@@ -25,6 +25,7 @@ def battle(player, boss):
     # Player starting hand
     squirrelCount = 20
     #squirrel = card.Card("squirrel", 0, 0, 1, None)
+    card.Card("squirrel", 0, 0, 1, None)
     playerHand = []
     playDeck = player._deck
     playDeck.shuffle()
