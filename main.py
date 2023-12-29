@@ -13,7 +13,7 @@ def main():
     print("Welcome to Inscription Game\nAre you worthy to defeat the Boss")
     name = input("What is your name, player? ")
     player_1 = player.Player(name)
-    #oss_1 = boss.Boss("AEYBGF")
+    boss_1 = boss.Boss("AEYBGF")
     #battle.battle(player_1, boss_1)
 
     Game_map = map.Map()
