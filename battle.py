@@ -104,6 +104,19 @@ def battle(hero, boss):
                 if random.randint(0, 1) == 1:
                     upcomingAttack.append(random_card(boss_deck))
 
+            currAttack = boss.upcomingAttack
+            boss.upcomingAttack = [None,None,None,None]
+
+            for index, card in enumerate(currPlayer):
+                if currAttack[index] is None:
+                    scale += card.power
+                    print(" The boss dealt damage to you\n Your Time Has Come!")
+
+                else:
+                    card.take_damage(currAttack[index].power)
+                    print(" The Boss " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
+
+
     # To-do
     """
         add a loop to every input checking if the user input what we expect or make a check_input
