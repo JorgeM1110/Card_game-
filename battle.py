@@ -25,7 +25,7 @@ def battle(player, boss):
     # Player starting hand
     squirrelCount = 20
     #squirrel = card.Card("squirrel", 0, 0, 1, None)
-    card.Card("squirrel", 0, 0, 1, None)
+    card.Card("Squirrel", 0, 0, 1, None)
     playerHand = []
     playDeck = player._deck
     playDeck.shuffle()
@@ -47,6 +47,7 @@ def battle(player, boss):
             choice = input("Choice: ")
             if choice == "1":
                 playerHand.append(random_card(playDeck))
+                #draw card function
                 show_hand(playerHand)
             elif choice == "2":
                 if squirrelCount > 0:
