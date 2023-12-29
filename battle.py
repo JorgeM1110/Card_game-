@@ -139,11 +139,11 @@ def battle(hero, boss):
             
     # Don't worry about this part
     # Cards that will be in play next round
-    boss._deck.shuffle()
-    upcomingAttack = []
-    for _ in range(4):
-        if random.randint(0, 1) == 1:
-            card = random_card(boss_deck)
-            if card:
-                upcomingAttack.append(card)
+    # boss._deck.shuffle()
+    # upcomingAttack = []
+    # for _ in range(4):
+    #     if random.randint(0, 1) == 1:
+    #         card = random_card(boss_deck)
+    #         if card:
+    #             upcomingAttack.append(card)
         
