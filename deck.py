@@ -20,7 +20,7 @@ class Deck:
                    kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()]
         for i in enemies:
             for j in range(3):
-                self._cards.append(i)
+                enemies.append(i)
 
     def __iter__(self):
         self._i = 0
