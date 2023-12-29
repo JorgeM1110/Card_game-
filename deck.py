@@ -69,7 +69,7 @@ class Deck:
         player_choice = input(f" would you like to upgrade again? 50% change\n Y/N\n")
         chance = 50
 
-        while player_choice == 'Y' and 'y' and chance > 0 :
+        while player_choice == 'Y' or player_choice == 'y' and chance > 0 :
             random_num = random.randint(1,100)
             if chance == 50:
                 if random_num <= 50:

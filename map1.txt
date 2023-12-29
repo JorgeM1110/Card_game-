@@ -1,6 +1,6 @@
-nnFnn
-nnBnn
-nnAnn
-nUnBn
-nBnUn
-nnSnn
+xxFxx
+xxBxx
+xxAxx
+xUxBx
+xBxAx
+xxSxx

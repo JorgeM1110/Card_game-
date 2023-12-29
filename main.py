@@ -13,8 +13,8 @@ def main():
     print(" Welcome to Inscription Game\n Are you worthy to defeat the Boss")
     name = input("What is your name, player? ")
     player_1 = player.Player(name)
-    boss_1 = boss.Boss("AEYBGF")
-    battle.battle(player_1, boss_1)
+    #oss_1 = boss.Boss("AEYBGF")
+    #battle.battle(player_1, boss_1)
 
     Game_map = map.Map()
     quit = False 
@@ -41,9 +41,15 @@ def main():
         elif move == 'U':
             player_1.displayDeck()
             player_1._deck.upgrade(player_1._deck._cards[0])
-        if move == 'B':
+
+        elif move == 'B':
             print("Battle")
             battle.battle(player_1, boss_1)
+
+        elif move == 'A':
+            player_1._deck.sacrifice()
+        
+
             
         print()
             
