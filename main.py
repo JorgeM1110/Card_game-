@@ -21,8 +21,8 @@ def main():
 
     while not quit:
         print(Game_map.show_map(player_1.location))
-        print("1. Go Stright\n2. Go left\n3. Go right\n4. Quit")
-        menu_choice = input("Enter choice:")
+        print("1. Go Stright\n2. Go left\n3. Go right\n4. Quit\n")
+        menu_choice = input("Enter choice:\n")
 
         move = ''
         if menu_choice == 1:

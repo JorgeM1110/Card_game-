@@ -15,12 +15,11 @@ class Map:
 
     def load_map(self, map_num):
         self._map = []
-        self._revealed = []
         map = f'map1.txt'
         with open(map, "r") as f:
             for line in f:
                 self._map.append(list(line.strip()))
-                self._revealed.append([False] * len(line.strip()))
+                
 
     def __getitem__(self, row):
         """overloaded [] operator – returns the specified row from the map."""
@@ -39,7 +38,7 @@ class Map:
         str_map = ""
         for i in range(len(self._map)):
             for j in range(len(self._map[i])):
-                if i == loc[0] and j == loc[1]:  
+                if i == loc[0] and j == loc[1]:
                     str_map += "@"
                 else:
                     str_map += self._map[i][j]
@@ -51,7 +50,7 @@ class Map:
         overwrites the character in the map list at the specified
         location with an ‘n’.
         """
-        self.map[loc[0]][loc[1]] = "X"
+        self._map[loc[0]][loc[1]] = "X"
 
 
 

@@ -7,7 +7,7 @@ class Player():
         self._name = name
         self._deck = deck.Deck()
         self._items = []
-        self._location = [0, 0]
+        self._location = [5, 2]
         self._currCost = 0
 
     @property
