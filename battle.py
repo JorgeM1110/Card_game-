@@ -3,6 +3,7 @@ import deck
 import card
 import player
 import boss
+import squirrel
 
 
 def random_card(deck):
@@ -25,7 +26,7 @@ def battle(player, boss):
     # Player starting hand
     squirrelCount = 20
     #squirrel = card.Card("squirrel", 0, 0, 1, None)
-    card.Card("Squirrel", 0, 0, 1, None)
+    mySquirell = squirrel.Squirrel()
     playerHand = []
     playDeck = player._deck
     playDeck.shuffle()
@@ -51,23 +52,23 @@ def battle(player, boss):
                 show_hand(playerHand)
             elif choice == "2":
                 if squirrelCount > 0:
-                    playerHand.append(card.Card("Squirrel", 0, 0, 1, None))
+                    playerHand.append(mySquirell)
                     show_hand(playerHand)
                     squirrelCount -= 1
 
 
             # Place a card down (later add an option for add item)
             done = False
-            print("1. Place a card down\n 2. End turn")
+            print("1. Place a card down \n2. End turn")
             choice = input("Enter choice: ")
             if choice == "1":
-                print("Choose a card from your hand")
+                print("\nChoose a card from your hand")
                 counter = 1
                 for card in playerHand:
                     print(f"{str(counter)}. {card}")
                     counter += 1
                 num = input("Enter choice: ") # <- This doesn't check if the user input the right number
-                pickedCard = playerHand[num - 1]
+                pickedCard = playerHand[int(num) - 1]
                 if pickedCard.cost > 0:
                     print(f"This card needs {pickedCard.cost} sacerfices")
                     currCost = 0

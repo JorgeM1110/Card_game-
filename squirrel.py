@@ -1,11 +1,10 @@
 import card
-
 class Squirrel(card.Card):
 
     def __init__(self):
-        max_hp = 2
+        max_hp = 1
         sigil = "None"
-        super().__init__("Squirrel", 1, 0, max_hp, sigil)
+        super().__init__("Squirrel", 0, 0, max_hp, sigil)
 
     def attack(self, entity):
         entity.take_damage(self._power)
