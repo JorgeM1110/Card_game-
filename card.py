@@ -61,4 +61,4 @@ class Card:
 
     def __str__(self):
         """ returns name, health, and sigil """
-        return f"{self.name} \n{self._hp}/{self._max_health} \nSigil: {self._sigil}\n"
+        return f"{self.name} \n Cost: {self.cost} \n HP:{self._hp}/{self._max_health} \n Power: {self.power} \n Sigil: {self._sigil}\n"
