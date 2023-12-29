@@ -45,12 +45,6 @@ class Map:
             str_map += "\n"
         return str_map
 
-    def remove_at_loc(self,loc):
-        """
-        overwrites the character in the map list at the specified
-        location with an ‘n’.
-        """
-        self._map[loc[0]][loc[1]] = "X"
 
 
 

@@ -14,6 +14,7 @@ def main():
     name = input("What is your name, player? ")
     player_1 = player.Player(name)
     
+    player_1.displayDeck()
 
     Game_map = map.Map()
     quit = False 
@@ -21,32 +22,29 @@ def main():
 
     while not quit:
         print(Game_map.show_map(player_1.location))
-        print("1. Go Stright\n2. Go left\n3. Go right\n4. Quit\n")
-        menu_choice = input("Enter choice:\n")
+        print("1. Go stright\n2. Go left\n3. Go right\n4. Quit")
+        menu_choice = input("Enter choice: ")
 
         move = ''
-        if menu_choice == 1:
+        if menu_choice == "1":
             move = player_1.go_forward()
-
-        elif menu_choice == 2:
+        elif menu_choice == "2":
             move = player_1.go_left()
-
-        elif menu_choice == 3:
+        elif menu_choice == "3":
             move = player_1.go_right()
-
-        elif menu_choice == 4:
+        elif menu_choice == "4":
             quit = True 
 
         if move == 'I':
             player_1.shopItem()
-        
         elif move == 'U':
             player_1.displayDeck()
             player_1._deck.upgrade()
-
-        
         if move == 'B':
-            combat = battle()
+            print("Battle")
+            #combat = battle()
+            
+        print()
             
 
 

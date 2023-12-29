@@ -14,13 +14,24 @@ class Deck:
 
     def __init__(self):
         self._cards = []
-
+        
         enemies = [bear.Bear(), snake.Snake(), skunk.Skunk(), 
                    bullfrog.BullFrog(), shark.Shark(), snappingturtle.SnappingTurtle(), 
                    kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()]
         for i in enemies:
             for j in range(3):
                 self._cards.append(i)
+
+    def __iter__(self):
+        self._i = 0
+        return self
+
+    def __next__(self):
+        self._i += 1
+        if self._i >= len(self._cards):
+            raise StopIteration
+        else:
+            return self._cards[self._i]
         
     def shuffle(self):
         """

@@ -18,6 +18,12 @@ class Player():
         for item in self._items:
             print(item, end=" ")
 
+    def displayDeck(self):
+        count = 0
+        for card in self._deck:
+            print(f"{count}. {card.name}")
+            count += 1
+
     def shopItem(self):
         print("Welcome to meh shop! \nPick whichever tickles your fancy!")
         print("1. Dagger - Cut out your eye and place it on scale, giving you one points toward victory.")
@@ -39,32 +45,29 @@ class Player():
             else:
                 print("Invalid input")
 
-    def displayDeck(self):
-        for card in self._deck:
-            print(card, end=" ")
-            count += 1
-
     def __str__(self):
         return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.displayDeck()}"
   
     def go_forward(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
-            if self._location[0] > 0:
+            if self._location[0] > 0 and m[self.location[0] - 1][self.location[1]] != "n":
                 self._location[0] -= 1
                 return m[self.location[0]][self.location[1]]
             else:
+                print("\nYou cannot go that way\n")
                 return 'o'
         return 'o'
 
     def go_right(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
-            if self._location[1] < 4 and self._location[0] > 0:
+            if self._location[1] < 4 and self._location[0] > 0 and m[self.location[0] - 1][self.location[1] + 1] != "n":
                 self._location[1] += 1
                 self._location[0] -= 1 
                 return m[self.location[0]][self.location[1]]
             else:
+                print("\nYou cannot go that way\n")
                 return 'o'
         else:
             return 'o'
@@ -72,11 +75,12 @@ class Player():
     def go_left(self):
         m = map.Map()
         if len(self._location) - 1 < len(m) - 1:
-            if self._location[1] > 0 and self._location[0] > 0:
+            if self._location[1] > 0 and self._location[0] > 0 and m[self.location[0] - 1][self.location[1] - 1] != "n":
                 self._location[1] -= 1
                 self._location[0] -= 1
                 return m[self.location[0]][self.location[1]]
             else:
+                print("\nYou cannot go that way\n")
                 return 'o'
         else:
             return 'o'
