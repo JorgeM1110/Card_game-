@@ -32,14 +32,14 @@ def main():
         elif menu_choice == "3":
             move = player_1.go_right()
 
-        elif menu_choice == 4:
+        elif menu_choice == "4":
             quit = True 
 
         if move == 'I':
             player_1.shopItem()
         elif move == 'U':
             player_1.displayDeck()
-            player_1._deck.upgrade()
+            player_1._deck.upgrade(player_1._deck._cards[0])
         if move == 'B':
             print("Battle")
             battle.battle(player_1, boss_1)
