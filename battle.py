@@ -15,13 +15,42 @@ def random_card(deck):
     return card 
 
 def show_hand(hand):
-    print("~~~ Current Hand ~~~")
+    print("\n~~~ Current Hand ~~~")
     for card in hand:
-        print(card)
-    print("~~~~~~~~~~~~~~~~~~~~")
+        print(card, end="")
+    print("~~~~~~~~~~~~~~~~~~~~\n")
+
+def displayBoard(upcomingAttack, currAttack, currPlayer):
+    print("\n~~~~~~~~ The Board ~~~~~~~~")
+    counter = 1
+    for index, card in enumerate(upcomingAttack):
+        if card == None:
+            print("None", end=" ")
+        else:
+            print(upcomingAttack[index].name, end=" ")
+    print("-> Upcoming attack")
+    print()
+
+    counter = 2
+    for index, card in enumerate(currAttack):
+        if card == None:
+            print("None", end=" ")
+        else:
+            print(currAttack[index].name, end=" ")
+    print("-> Current attack")
+    print()        
+    
+    counter = 3
+    for index, card in enumerate(currPlayer):
+        if card == None:
+            print("None", end=" ")
+        else:
+            print(currPlayer[index].name, end=" ")
+    print("-> Current player")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
 def battle(player, boss):
-    print("~~~ Battle Start! ~~~~")
+    print("---------- Battle Start! ----------")
     
     # Player starting hand
     squirrelCount = 20
@@ -36,11 +65,35 @@ def battle(player, boss):
     boss._deck.shuffle()
     
     scale = 0
-    turn = 0 
-    currPlayer = [None, None, None, None]
+    turn = 1
     upcomingAttack = [None, None, None, None]
-    currAttack = [None, None, None, None]
+    currAttack =     [None, None, None, None]
+    currPlayer =     [None, None, None, None]
+
+
     while scale > -5 and scale < 5:
+
+        if turn == 1:
+            currAttack = upcomingAttack
+            upcomingAttack = [None,None,None,None]
+
+            for index, card in enumerate(upcomingAttack):
+                if random.randint(0, 1) == 1:
+                    upcomingAttack[index] = boss._deck.draw_card()
+            
+            displayBoard(upcomingAttack, currAttack, currPlayer)
+
+            for index, card in enumerate(currAttack):
+                if currAttack[index] is not None:
+                    if currPlayer[index] is None:
+                        scale += card.power
+                        print(f"The boss's {card.name} dealt {card.power} damage to you ")
+                    else:
+                        card.take_damage(currAttack[index].power)
+                        print(" The Boss's " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
+
+            turn = 0
+
         if turn == 0:
             show_hand(playerHand)
             # Drawing 
@@ -56,9 +109,7 @@ def battle(player, boss):
                     show_hand(playerHand)
                     squirrelCount -= 1
 
-
             # Place a card down (later add an option for add item)
-            done = False
             print("1. Place a card down \n2. End turn")
             choice = input("Enter choice: ")
             if choice == "1":
@@ -106,23 +157,8 @@ def battle(player, boss):
                         currAttack[index].take_damage(card.power)
                         print(f"{card.name} delt {card.power} to {currAttack.name}")
                 turn = 1
-        if turn == 1:
-            # Cards that will be in play next round
-            for index, card in enumerate(upcomingAttack):
-                if random.randint(0, 1) == 1:
-                    upcomingAttack.append(random_card(boss_deck))
 
-            currAttack = boss.upcomingAttack
-            boss.upcomingAttack = [None,None,None,None]
-
-            for index, card in enumerate(currPlayer):
-                if currAttack[index] is None:
-                    scale += card.power
-                    print(" The boss dealt damage to you\n Your Time Has Come!")
-
-                else:
-                    card.take_damage(currAttack[index].power)
-                    print(" The Boss " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
+        displayBoard(upcomingAttack, currAttack, currPlayer)
 
 
     # To-do

@@ -10,7 +10,7 @@ import battle
 
 def main():
 
-    print(" Welcome to Inscription Game\n Are you worthy to defeat the Boss")
+    print("Welcome to Inscription Game\nAre you worthy to defeat the Boss")
     name = input("What is your name, player? ")
     player_1 = player.Player(name)
     boss_1 = boss.Boss("AEYBGF")
@@ -32,7 +32,6 @@ def main():
             move = player_1.go_left()
         elif menu_choice == "3":
             move = player_1.go_right()
-
         elif menu_choice == "4":
             quit = True 
 
@@ -41,7 +40,7 @@ def main():
         elif move == 'U':
             player_1.displayDeck()
             player_1._deck.upgrade(player_1._deck._cards[0])
-        if move == 'B':
+        elif move == 'B':
             print("Battle")
             battle.battle(player_1, boss_1)
             
