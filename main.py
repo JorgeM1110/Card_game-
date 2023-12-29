@@ -32,7 +32,8 @@ def main():
             move = player_1.go_left()
         elif menu_choice == "3":
             move = player_1.go_right()
-        elif menu_choice == "4":
+
+        elif menu_choice == 4:
             quit = True 
 
         if move == 'I':
