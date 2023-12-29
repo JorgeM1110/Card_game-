@@ -2,5 +2,5 @@ nnFnn
 nnBnn
 nnAnn
 nUnBn
-nBnIn
+nBnUn
 nnSnn
