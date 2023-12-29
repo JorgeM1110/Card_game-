@@ -20,7 +20,7 @@ class Deck:
                    kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()]
         for i in enemies:
             for j in range(3):
-                enemies.append(i)
+                self._cards.append(i)
 
     def __iter__(self):
         self._i = 0
@@ -157,5 +157,6 @@ class Deck:
             gaincard.sigil = deadcard.sigil
 
     def removeCard(self, index):
-        return self._cards.pop(index)
+        print(self._deck[index].name, " is removed")
+        return self._deck.pop(index)
 
