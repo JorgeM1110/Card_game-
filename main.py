@@ -14,6 +14,7 @@ def main():
     name = input("What is your name, player? ")
     player_1 = player.Player(name)
     boss_1 = boss.Boss("AEYBGF")
+    battle.battle(player_1, boss_1)
 
     Game_map = map.Map()
     quit = False 

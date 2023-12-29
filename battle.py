@@ -1,11 +1,12 @@
 import random
+import deck
 import card
 import player
 import boss
 
 
 def random_card(deck):
-    if len(deck) == 0:
+    if len(deck) <= 0:
         print("You have nothing left.")
         return None
     cardNum = random.randint(0, len(deck) - 1)
@@ -13,21 +14,25 @@ def random_card(deck):
     return card 
 
 def show_hand(hand):
+    print("~~~ Current Hand ~~~")
     for card in hand:
         print(card)
+    print("~~~~~~~~~~~~~~~~~~~~")
 
-def battle(hero, boss):
+def battle(player, boss):
     print("~~~ Battle Start! ~~~~")
     
     # Player starting hand
     squirrelCount = 20
-    squirrel = card.Card("squirrel", 0, 0, 1, None)
+    #squirrel = card.Card("squirrel", 0, 0, 1, None)
     playerHand = []
-    hero._deck.shuffle()
+    playDeck = player._deck
+    playDeck.shuffle()
     for _ in range(4):
-        playerHand.append(random_card(hero._deck))
-    boss._deck.shuffle()
+        playerHand.append(random_card(playDeck))
 
+    boss._deck.shuffle()
+    
     scale = 0
     turn = 0 
     currPlayer = [None, None, None, None]
@@ -35,24 +40,24 @@ def battle(hero, boss):
     currAttack = [None, None, None, None]
     while scale > -5 and scale < 5:
         if turn == 0:
+            show_hand(playerHand)
             # Drawing 
             print("1. Draw from deck \n2. Draw a squirrel")
             choice = input("Choice: ")
             if choice == "1":
-                playerHand.append(random_card(hero._deck))
-                correctInput = True
+                playerHand.append(random_card(playDeck))
+                show_hand(playerHand)
             elif choice == "2":
                 if squirrelCount > 0:
-                    playerHand.append(squirrel)
+                    playerHand.append(card.Card("Squirrel", 0, 0, 1, None))
+                    show_hand(playerHand)
                     squirrelCount -= 1
-                    correctInput = True
-            else:
-                print("Incorrect input: either 1 or 2")
+
 
             # Place a card down (later add an option for add item)
             done = False
-            choice = input("Enter choice: ")
             print("1. Place a card down\n 2. End turn")
+            choice = input("Enter choice: ")
             if choice == "1":
                 print("Choose a card from your hand")
                 counter = 1
