@@ -4,9 +4,11 @@ import card
 import player
 import boss
 import squirrel
+import check_input
 
 
 def random_card(deck):
+    """ From a deck of cards, pick a random card """
     if len(deck) <= 0:
         print("You have nothing left.")
         return None
@@ -15,12 +17,16 @@ def random_card(deck):
     return card 
 
 def show_hand(hand):
+    """ Display current hand """
     print("\n~~~ Current Hand ~~~")
     for card in hand:
-        print(card, end="")
+        print(card)
+        print()
+
     print("~~~~~~~~~~~~~~~~~~~~\n")
 
 def displayBoard(upcomingAttack, currAttack, currPlayer):
+    """ hows current board """
     print("\n~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
     for index, card in enumerate(upcomingAttack):
@@ -49,15 +55,115 @@ def displayBoard(upcomingAttack, currAttack, currPlayer):
     print("-> Current player")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
+def bossTurn(boss, upcomingAttack, currAttack, currPlayer):
+    """ Randomly add cards to UpcomingAttack, pushes it to currAttack and attacks player """
+    currAttack = upcomingAttack
+    upcomingAttack = [None,None,None,None]
+
+    for index, card in enumerate(upcomingAttack):
+        if random.randint(0, 1) == 1:
+            upcomingAttack[index] = boss._deck.draw_card()
+    
+    displayBoard(upcomingAttack, currAttack, currPlayer)
+
+    for index, card in enumerate(currAttack):
+        if currAttack[index] is not None:
+            if currPlayer[index] is None:
+                scale += card.power
+                print(f"The boss's {card.name} dealt {card.power} damage to you ")
+            else:
+                card.take_damage(currAttack[index].power)
+                print("The Boss's " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
+
+def playerTurn(playerHand, playDeck, squirrelCount, mySquirell, currPlayer, scale, upcomingAttack, currAttack):
+    """ Draws and sacerfices cards, and attacks boss """
+    drawCard(playerHand, playDeck, squirrelCount, mySquirell)
+    done = False
+    while not done:
+        print("1. Place a card down \n2. End turn")
+        choice = check_input.range_int("Enter choice: ", 1, 2)
+        if choice == 1:
+            placeCard(playerHand, currPlayer)
+        elif choice == 2:
+            playerAttack(currPlayer, currAttack, scale)
+            done = True
+        displayBoard(upcomingAttack, currAttack, currPlayer)
+
+def drawCard(playerHand, playDeck, squirrelCount, mySquirell):
+    """ User chooses a card of squirrel """
+    show_hand(playerHand)
+    print("1. Draw from deck \n2. Draw a squirrel")
+    choice = check_input.range_int("Enter choice: ", 1, 2)
+    if choice == 1:
+        playerHand.append(random_card(playDeck))
+        show_hand(playerHand)
+    elif choice == 2:
+        if squirrelCount > 0:
+            playerHand.append(mySquirell)
+            show_hand(playerHand)
+            squirrelCount -= 1
+
+def placeCard(playerHand, currPlayer):
+    """ Place and sacerfice cards """
+    print("\nChoose a card from your hand")
+    counter = 1
+    for card in playerHand:
+        print(f"{str(counter)}. {card}")
+        print()
+        counter += 1
+    num = check_input.range_int("Enter choice: ", 1, counter - 1)
+
+    #Problem - when the user chooses none, make a check_input function
+    pickedCard = playerHand[num - 1]
+    playerHand[num - 1] = None
+
+    if pickedCard.cost > 0:
+        print(f"This card needs {pickedCard.cost} sacerfices")
+        currCost = 0
+        while currCost < pickedCard.cost:
+            print("Which card would you sacerfice?")
+            counter = 1
+            for card in currPlayer:
+                if card is not None:
+                    print(f"{counter}. {card}") 
+                else:
+                    print(f"{counter}. No card")
+                counter += 1 
+            choice = check_input.range_int("Enter choice: ", 1, counter)
+            if currPlayer[choice - 1] is not None:
+                currCost += 1
+                print(f"You have sacerficed {currCost}/{pickedCard.cost}")
+                currPlayer[choice - 1] = None
+            else:
+                print("There's no card")
+
+    cardPlace = False
+    while not cardPlace:
+        print("Where would you like to place the card? Slot 1, 2, 3, or 4")
+        choice = check_input.range_int("Enter choice: ", 1, 4)
+        if currPlayer[choice - 1] is None:
+            currPlayer[choice - 1] = pickedCard
+            cardPlace = True
+        else:
+            print("There is already a card in that slot, pick somewhere else.")
+
+def playerAttack(currPlayer, currAttack, scale):
+    for index, card in enumerate(currPlayer):
+        if currAttack[index] is None:
+            scale -= card.power
+            print(f"You have done {card.power} to the boss!")
+        else:
+            currAttack[index].take_damage(card.power)
+            print(f"{card.name} delt {card.power} to {currAttack.name}")
+
 def battle(player, boss):
     print("---------- Battle Start! ----------")
     
-    # Player starting hand
+    # Initializes starting deck and hand
     squirrelCount = 20
-    #squirrel = card.Card("squirrel", 0, 0, 1, None)
     mySquirell = squirrel.Squirrel()
     playerHand = []
-    playDeck = player._deck
+    playDeck = player._deck 
     playDeck.shuffle()
     for _ in range(4):
         playerHand.append(random_card(playDeck))
@@ -70,97 +176,15 @@ def battle(player, boss):
     currAttack =     [None, None, None, None]
     currPlayer =     [None, None, None, None]
 
-
     while scale > -5 and scale < 5:
-
+        # Boss turn
         if turn == 1:
-            currAttack = upcomingAttack
-            upcomingAttack = [None,None,None,None]
-
-            for index, card in enumerate(upcomingAttack):
-                if random.randint(0, 1) == 1:
-                    upcomingAttack[index] = boss._deck.draw_card()
-            
-            displayBoard(upcomingAttack, currAttack, currPlayer)
-
-            for index, card in enumerate(currAttack):
-                if currAttack[index] is not None:
-                    if currPlayer[index] is None:
-                        scale += card.power
-                        print(f"The boss's {card.name} dealt {card.power} damage to you ")
-                    else:
-                        card.take_damage(currAttack[index].power)
-                        print(" The Boss's " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
-
+            bossTurn(boss, upcomingAttack, currAttack, currPlayer)
             turn = 0
-
-        if turn == 0:
-            show_hand(playerHand)
-            # Drawing 
-            print("1. Draw from deck \n2. Draw a squirrel")
-            choice = input("Choice: ")
-            if choice == "1":
-                playerHand.append(random_card(playDeck))
-                #draw card function
-                show_hand(playerHand)
-            elif choice == "2":
-                if squirrelCount > 0:
-                    playerHand.append(mySquirell)
-                    show_hand(playerHand)
-                    squirrelCount -= 1
-
-            # Place a card down (later add an option for add item)
-            done = False
-            while not done:
-                print("1. Place a card down \n2. End turn")
-                choice = input("Enter choice: ")
-                if choice == "1":
-                    print("\nChoose a card from your hand")
-                    counter = 1
-                    for card in playerHand:
-                        print(f"{str(counter)}. {card}")
-                        counter += 1
-                    num = input("Enter choice: ") # <- This doesn't check if the user input the right number
-                    pickedCard = playerHand[int(num) - 1]
-                    if pickedCard.cost > 0:
-                        print(f"This card needs {pickedCard.cost} sacerfices")
-                        currCost = 0
-                        while currCost < pickedCard.cost:
-                            print("Which card would you sacerfice?")
-                            counter = 1
-                            for card in currPlayer:
-                                if card is not None:
-                                    print(f"{counter}. {card}") 
-                                    counter += 1 
-                                else:
-                                    print(f"{counter}. No card")
-                            choice = input("Enter choice: ") # No checking
-                            if currPlayer[int(choice) - 1] is not None:
-                                currCost += 1
-                                print(f"You have sacerficed {currCost}/{pickedCard.cost}")
-                                currPlayer.pop(int(choice) - 1)
-                            else:
-                                print("There's no card")
-                    placeCard = False
-                    while not placeCard:
-                        print("Where would you like to place the card? Slot 1, 2, 3, or 4")
-                        choice = input("Enter choice: ")
-                        if currPlayer[int(choice) - 1] is None:
-                            currPlayer[int(choice) - 1] = pickedCard
-                            placeCard = True
-                        else:
-                            print("There is already a card in that slot, pick somewhere else.")
-                elif choice == "2":
-                    for index, card in enumerate(currPlayer):
-                        if currAttack[index] is None:
-                            scale -= card.power
-                            print(f"You have done {card.power} to the boss!")
-                        else:
-                            currAttack[index].take_damage(card.power)
-                            print(f"{card.name} delt {card.power} to {currAttack.name}")
-                    turn = 1
-                    done = True
-                displayBoard(upcomingAttack, currAttack, currPlayer)
+        # Player turn
+        elif turn == 0:
+            playerTurn(playerHand, playDeck, squirrelCount, mySquirell, currPlayer, scale, upcomingAttack, currAttack)
+            turn = 1
 
 
     # To-do
@@ -181,15 +205,4 @@ def battle(player, boss):
         Once everything works (so just simple health, power, and cost), work on sigil, and items
         Maybe add a put down card, if the user chooses a card but then changes their mind
     """
-
-            
-    # Don't worry about this part
-    # Cards that will be in play next round
-    # boss._deck.shuffle()
-    # upcomingAttack = []
-    # for _ in range(4):
-    #     if random.randint(0, 1) == 1:
-    #         card = random_card(boss_deck)
-    #         if card:
-    #             upcomingAttack.append(card)
         

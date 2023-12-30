@@ -1,6 +1,6 @@
-xxFxx
-xxBxx
-xxAxx
-xUxBx
-xBxAx
-xxSxx
+--F--
+--B--
+--A--
+-U-B-
+-B-A-
+--S--
