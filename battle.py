@@ -110,55 +110,57 @@ def battle(player, boss):
                     squirrelCount -= 1
 
             # Place a card down (later add an option for add item)
-            print("1. Place a card down \n2. End turn")
-            choice = input("Enter choice: ")
-            if choice == "1":
-                print("\nChoose a card from your hand")
-                counter = 1
-                for card in playerHand:
-                    print(f"{str(counter)}. {card}")
-                    counter += 1
-                num = input("Enter choice: ") # <- This doesn't check if the user input the right number
-                pickedCard = playerHand[int(num) - 1]
-                if pickedCard.cost > 0:
-                    print(f"This card needs {pickedCard.cost} sacerfices")
-                    currCost = 0
-                    while currCost < pickedCard.cost:
-                        print("Which card would you sacerfice?")
-                        counter = 1
-                        for card in currPlayer:
-                            if card is not None:
-                                print(f"{counter}. {card}") 
-                                counter += 1 
+            done = False
+            while not done:
+                print("1. Place a card down \n2. End turn")
+                choice = input("Enter choice: ")
+                if choice == "1":
+                    print("\nChoose a card from your hand")
+                    counter = 1
+                    for card in playerHand:
+                        print(f"{str(counter)}. {card}")
+                        counter += 1
+                    num = input("Enter choice: ") # <- This doesn't check if the user input the right number
+                    pickedCard = playerHand[int(num) - 1]
+                    if pickedCard.cost > 0:
+                        print(f"This card needs {pickedCard.cost} sacerfices")
+                        currCost = 0
+                        while currCost < pickedCard.cost:
+                            print("Which card would you sacerfice?")
+                            counter = 1
+                            for card in currPlayer:
+                                if card is not None:
+                                    print(f"{counter}. {card}") 
+                                    counter += 1 
+                                else:
+                                    print(f"{counter}. No card")
+                            choice = input("Enter choice: ") # No checking
+                            if currPlayer[int(choice) - 1] is not None:
+                                currCost += 1
+                                print(f"You have sacerficed {currCost}/{pickedCard.cost}")
+                                currPlayer.pop(int(choice) - 1)
                             else:
-                                print(f"{counter}. No card")
-                        choice = input("Enter choice: ") # No checking
-                        if currPlayer[int(choice) - 1] is not None:
-                            currCost += 1
-                            print(f"You have sacerficed {currCost}/{pickedCard.cost}")
-                            currPlayer.pop(int(choice) - 1)
+                                print("There's no card")
+                    placeCard = False
+                    while not placeCard:
+                        print("Where would you like to place the card? Slot 1, 2, 3, or 4")
+                        choice = input("Enter choice: ")
+                        if currPlayer[int(choice) - 1] is None:
+                            currPlayer[int(choice) - 1] = pickedCard
+                            placeCard = True
                         else:
-                            print("There's no card")
-                placeCard = False
-                while not placeCard:
-                    print("Where would you like to place the card? Slot 1, 2, 3, or 4")
-                    choice = input("Enter choice: ")
-                    if currPlayer[int(choice) - 1] is None:
-                        currPlayer[int(choice) - 1] = playerHand[int(choice) - 1]
-                        placeCard = True
-                    else:
-                        print("There is already a card in that slot, pick somewhere else.")
-            elif choice == "2":
-                for index, card in enumerate(currPlayer):
-                    if currAttack[index] is None:
-                        scale -= card.power
-                        print(f"You have done {card.power} to the boss!")
-                    else:
-                        currAttack[index].take_damage(card.power)
-                        print(f"{card.name} delt {card.power} to {currAttack.name}")
-                turn = 1
-
-        displayBoard(upcomingAttack, currAttack, currPlayer)
+                            print("There is already a card in that slot, pick somewhere else.")
+                elif choice == "2":
+                    for index, card in enumerate(currPlayer):
+                        if currAttack[index] is None:
+                            scale -= card.power
+                            print(f"You have done {card.power} to the boss!")
+                        else:
+                            currAttack[index].take_damage(card.power)
+                            print(f"{card.name} delt {card.power} to {currAttack.name}")
+                    turn = 1
+                    done = True
+                displayBoard(upcomingAttack, currAttack, currPlayer)
 
 
     # To-do
