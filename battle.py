@@ -105,37 +105,32 @@ def drawCard(playerHand, playDeck, squirrelCount, mySquirell):
 
 def placeCard(playerHand, currPlayer):
     """ Place and sacerfice cards """
-    print("\nChoose a card from your hand")
-    counter = 1
-    for card in playerHand:
-        print(f"{str(counter)}. {card}")
-        print()
-        counter += 1
-    num = check_input.range_int("Enter choice: ", 1, counter - 1)
 
-    #Problem - when the user chooses none, make a check_input function
-    pickedCard = playerHand[num - 1]
-    playerHand[num - 1] = None
-
-    if pickedCard.cost > 0:
-        print(f"This card needs {pickedCard.cost} sacerfices")
-        currCost = 0
-        while currCost < pickedCard.cost:
-            print("Which card would you sacerfice?")
-            counter = 1
+    doneChoosing = False
+    hasEnough = 0
+    pickedCard = None
+    while not doneChoosing:
+        pickedCard, index = check_input.choose_card("\nChoose a card from your hand", playerHand, return_index=True)
+        if pickedCard.cost > 0: 
             for card in currPlayer:
                 if card is not None:
-                    print(f"{counter}. {card}") 
-                else:
-                    print(f"{counter}. No card")
-                counter += 1 
-            choice = check_input.range_int("Enter choice: ", 1, counter)
-            if currPlayer[choice - 1] is not None:
-                currCost += 1
-                print(f"You have sacerficed {currCost}/{pickedCard.cost}")
-                currPlayer[choice - 1] = None
-            else:
-                print("There's no card")
+                    hasEnough += 1
+        if hasEnough >= pickedCard.cost:
+            playerHand[index] = None
+            doneChoosing = True
+        else:
+            print("This card requires more creatures to sacerfice then what you currently have on the board.")
+            hasEnough = 0
+
+    currSac = 0
+    if currSac < pickedCard.cost:
+        print(f"\nThis card needs {pickedCard.cost} sacerfices. Choose wisely.")
+        while currSac < pickedCard.cost:
+            print("Which card would you like to sacerfice?")
+            choiceCard, index= check_input.choose_card("", currPlayer, return_index=True)
+            currPlayer[index] = None
+            currSac += 1
+            print(f"You have sacerficed {choiceCard.name} sacerfices: {currSac}/{pickedCard.cost}")
 
     cardPlace = False
     while not cardPlace:
