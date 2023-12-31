@@ -144,12 +144,15 @@ def placeCard(playerHand, currPlayer):
 
 def playerAttack(currPlayer, currAttack, scale):
     for index, card in enumerate(currPlayer):
-        if currAttack[index] is None:
-            scale -= card.power
-            print(f"You have done {card.power} to the boss!")
+        if card is not None:
+            if currAttack[index] is None:
+                scale -= card.power
+                print(f"You have done {card.power} to the boss!")
+            else:
+                currAttack[index].take_damage(card.power)
+                print(f"{card.name} delt {card.power} to {currAttack.name}")
         else:
-            currAttack[index].take_damage(card.power)
-            print(f"{card.name} delt {card.power} to {currAttack.name}")
+            print(f"No cards placed in slot {index + 1}")
 
 def battle(player, boss):
     print("---------- Battle Start! ----------")
@@ -172,6 +175,7 @@ def battle(player, boss):
     currPlayer =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
+        print(f"Scale: {scale}")
         # Boss turn
         if turn == 1:
             bossTurn(boss, upcomingAttack, currAttack, currPlayer)
