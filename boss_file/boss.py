@@ -23,7 +23,7 @@ class Boss:
     def __str__(self):
         return "You're face with " + self._name + " the boss who will destroy you!"
     
-    def displayDeck(self):
+    def display_deck(self):
         for card in self._deck:
             print(card, end=" ")
     

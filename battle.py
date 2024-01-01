@@ -13,7 +13,7 @@ def random_card(deck):
         print("You have nothing left.")
         return None
     cardNum = random.randint(0, len(deck) - 1)
-    card = deck.removeCard(cardNum)
+    card = deck.remove_card(cardNum)
     return card 
 
 def show_hand(hand):
@@ -25,165 +25,165 @@ def show_hand(hand):
 
     print("~~~~~~~~~~~~~~~~~~~~\n")
 
-def displayBoard(upcomingAttack, currAttack, currPlayer):
+def display_board(upcoming_attack, curr_attack, curr_hero):
     """ hows current board """
     print("\n~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
-    for index, card in enumerate(upcomingAttack):
+    for index, card in enumerate(upcoming_attack):
         if card == None:
             print("None", end=" ")
         else:
-            print(upcomingAttack[index].name, end=" ")
+            print(upcoming_attack[index].name, end=" ")
     print("-> Upcoming attack")
     print()
 
     counter = 2
-    for index, card in enumerate(currAttack):
+    for index, card in enumerate(curr_attack):
         if card == None:
             print("None", end=" ")
         else:
-            print(currAttack[index].name, end=" ")
+            print(curr_attack[index].name, end=" ")
     print("-> Current attack")
     print()        
     
     counter = 3
-    for index, card in enumerate(currPlayer):
+    for index, card in enumerate(curr_hero):
         if card == None:
             print("None", end=" ")
         else:
-            print(currPlayer[index].name, end=" ")
-    print("-> Current player")
+            print(curr_hero[index].name, end=" ")
+    print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-def bossTurn(boss, upcomingAttack, currAttack, currPlayer):
-    """ Randomly add cards to UpcomingAttack, pushes it to currAttack and attacks player """
-    currAttack = upcomingAttack
-    upcomingAttack = [None,None,None,None]
+def villain_turn(villain, upcoming_attack, curr_attack, curr_hero):
+    """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
+    curr_attack = upcoming_attack
+    upcoming_attack = [None,None,None,None]
 
-    for index, card in enumerate(upcomingAttack):
+    for index, card in enumerate(upcoming_attack):
         if random.randint(0, 1) == 1:
-            upcomingAttack[index] = boss._deck.draw_card()
+            upcoming_attack[index] = villain._deck.draw_card()
     
-    displayBoard(upcomingAttack, currAttack, currPlayer)
+    display_board(upcoming_attack, curr_attack, curr_hero)
 
-    for index, card in enumerate(currAttack):
-        if currAttack[index] is not None:
-            if currPlayer[index] is None:
+    for index, card in enumerate(curr_attack):
+        if curr_attack[index] is not None:
+            if curr_hero[index] is None:
                 scale += card.power
-                print(f"The boss's {card.name} dealt {card.power} damage to you ")
+                print(f"The villian's {card.name} dealt {card.power} damage to you ")
             else:
-                card.take_damage(currAttack[index].power)
-                print("The Boss's " + str(currAttack[index].name) + " dealt " + str(currAttack[index].power) + " damage to your " + str(card.name))
+                card.take_damage(curr_attack[index].power)
+                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(card.name))
 
-def playerTurn(playerHand, playDeck, squirrelCount, mySquirell, currPlayer, scale, upcomingAttack, currAttack):
-    """ Draws and sacerfices cards, and attacks boss """
-    drawCard(playerHand, playDeck, squirrelCount, mySquirell)
+def hero_turn(hero_hand, play_deck, squirrel_count, my_squirrel, curr_hero, scale, upcoming_attack, curr_attack):
+    """ Draws and sacerfices cards, and attacks villian """
+    draw_card(hero_hand, play_deck, squirrel_count, my_squirrel)
     done = False
     while not done:
         print("1. Place a card down \n2. End turn")
         choice = check_input.range_int("Enter choice: ", 1, 2)
         if choice == 1:
-            placeCard(playerHand, currPlayer)
+            placeCard(hero_hand, curr_hero)
         elif choice == 2:
-            playerAttack(currPlayer, currAttack, scale)
+            heroAttack(curr_hero, curr_attack, scale)
             done = True
-        displayBoard(upcomingAttack, currAttack, currPlayer)
+        display_board(upcoming_attack, curr_attack, curr_hero)
 
-def drawCard(playerHand, playDeck, squirrelCount, mySquirell):
+def draw_card(hero_hand, play_deck, squirrel_count, my_squirrel):
     """ User chooses a card of squirrel """
-    show_hand(playerHand)
+    show_hand(hero_hand)
     print("1. Draw from deck \n2. Draw a squirrel")
     choice = check_input.range_int("Enter choice: ", 1, 2)
     if choice == 1:
-        playerHand.append(random_card(playDeck))
-        show_hand(playerHand)
+        hero_hand.append(random_card(play_deck))
+        show_hand(hero_hand)
     elif choice == 2:
-        if squirrelCount > 0:
-            playerHand.append(mySquirell)
-            show_hand(playerHand)
-            squirrelCount -= 1
+        if squirrel_count > 0:
+            hero_hand.append(my_squirrel)
+            show_hand(hero_hand)
+            squirrel_count -= 1
 
-def placeCard(playerHand, currPlayer):
+def placeCard(hero_hand, curr_hero):
     """ Place and sacerfice cards """
 
-    doneChoosing = False
-    hasEnough = 0
-    pickedCard = None
-    while not doneChoosing:
-        pickedCard, index = check_input.choose_card("\nChoose a card from your hand", playerHand, return_index=True)
-        if pickedCard.cost > 0: 
-            for card in currPlayer:
+    done_choosing = False
+    has_enough = 0
+    picked_card = None
+    while not done_choosing:
+        picked_card, index = check_input.choose_card("\nChoose a card from your hand", hero_hand, return_index=True)
+        if picked_card.cost > 0: 
+            for card in curr_hero:
                 if card is not None:
-                    hasEnough += 1
-        if hasEnough >= pickedCard.cost:
-            playerHand[index] = None
-            doneChoosing = True
+                    has_enough += 1
+        if has_enough >= picked_card.cost:
+            hero_hand[index] = None
+            done_choosing = True
         else:
             print("This card requires more creatures to sacerfice then what you currently have on the board.")
-            hasEnough = 0
+            has_enough = 0
 
-    currSac = 0
-    if currSac < pickedCard.cost:
-        print(f"\nThis card needs {pickedCard.cost} sacerfices. Choose wisely.")
-        while currSac < pickedCard.cost:
+    curr_sac = 0
+    if curr_sac < picked_card.cost:
+        print(f"\nThis card needs {picked_card.cost} sacerfices. Choose wisely.")
+        while curr_sac < picked_card.cost:
             print("Which card would you like to sacerfice?")
-            choiceCard, index= check_input.choose_card("", currPlayer, return_index=True)
-            currPlayer[index] = None
-            currSac += 1
-            print(f"You have sacerficed {choiceCard.name} sacerfices: {currSac}/{pickedCard.cost}")
+            choice_card, index= check_input.choose_card("", curr_hero, return_index=True)
+            curr_hero[index] = None
+            curr_sac += 1
+            print(f"You have sacerficed {choice_card.name} sacerfices: {curr_sac}/{picked_card.cost}")
 
     cardPlace = False
     while not cardPlace:
         print("Where would you like to place the card? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
-        if currPlayer[choice - 1] is None:
-            currPlayer[choice - 1] = pickedCard
+        if curr_hero[choice - 1] is None:
+            curr_hero[choice - 1] = picked_card
             cardPlace = True
         else:
             print("There is already a card in that slot, pick somewhere else.")
 
-def playerAttack(currPlayer, currAttack, scale):
-    for index, card in enumerate(currPlayer):
+def heroAttack(curr_hero, curr_attack, scale):
+    for index, card in enumerate(curr_hero):
         if card is not None:
-            if currAttack[index] is None:
+            if curr_attack[index] is None:
                 scale -= card.power
-                print(f"You have done {card.power} to the boss!")
+                print(f"You have done {card.power} to the villian!")
             else:
-                currAttack[index].take_damage(card.power)
-                print(f"{card.name} delt {card.power} to {currAttack.name}")
+                curr_attack[index].take_damage(card.power)
+                print(f"{card.name} delt {card.power} to {curr_attack.name}")
         else:
             print(f"No cards placed in slot {index + 1}")
 
-def battle(player, boss):
+def battle(hero, villian):
     print("---------- Battle Start! ----------")
     
     # Initializes starting deck and hand
-    squirrelCount = 20
-    mySquirell = squirrel.Squirrel()
-    playerHand = []
-    playDeck = player._deck 
-    playDeck.shuffle()
+    squirrel_count = 20
+    my_squirrel = squirrel.Squirrel()
+    hero_hand = []
+    play_deck = hero._deck 
+    play_deck.shuffle()
     for _ in range(4):
-        playerHand.append(random_card(playDeck))
+        hero_hand.append(random_card(play_deck))
 
-    boss._deck.shuffle()
+    villian._deck.shuffle()
     
     scale = 0
     turn = 1
-    upcomingAttack = [None, None, None, None]
-    currAttack =     [None, None, None, None]
-    currPlayer =     [None, None, None, None]
+    upcoming_attack = [None, None, None, None]
+    curr_attack =     [None, None, None, None]
+    curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
         print(f"Scale: {scale}")
-        # Boss turn
+        # villian turn
         if turn == 1:
-            bossTurn(boss, upcomingAttack, currAttack, currPlayer)
+            villain_turn(villian, upcoming_attack, curr_attack, curr_hero)
             turn = 0
             print(f"Scale: {scale}")
-        # Player turn
+        # Hero turn
         elif turn == 0:
-            playerTurn(playerHand, playDeck, squirrelCount, mySquirell, currPlayer, scale, upcomingAttack, currAttack)
+            hero_turn(hero_hand, play_deck, squirrel_count, my_squirrel, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 1
             print(f"Scale: {scale}")
 
@@ -199,9 +199,9 @@ def battle(player, boss):
             - If currPlayer is full, player can only either sacerfice, draw a squirrel, or end turn 
         At each end turn, whoever turn is it, their card deals damage to the opposing entity 
             - Add/Subtract to scale if there is no card blocking or the card attack is airborne and the card opposing can't block it 
-        add the boss turn
-            - Randomly choose an enemy card and place it in it's upcomingAttack where the player can see what is comming next
-            - Move the upcomingAttack to currAttack and replace upcomingAttack if we want it to continue, so we can have 2 - 3 rounds where the boss has a chance to places a card 
+        add the villian turn
+            - Randomly choose an enemy card and place it in it's upcoming_attack where the player can see what is comming next
+            - Move the upcoming_attack to curr_attack and replace upcoming_attack if we want it to continue, so we can have 2 - 3 rounds where the villian has a chance to places a card 
             - Deals damage to player or player's card 
         Once everything works (so just simple health, power, and cost), work on sigil, and items
         Maybe add a put down card, if the user chooses a card but then changes their mind

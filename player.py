@@ -18,13 +18,13 @@ class Player():
         for item in self._items:
             print(item, end=" ")
 
-    def displayDeck(self):
+    def display_deck(self):
         count = 0
         for card in self._deck:
             print(f"{count}. {card.name}")
             count += 1
 
-    def shopItem(self):
+    def shop_item(self):
         print("Welcome to meh shop! \nPick whichever tickles your fancy!")
         print("1. Dagger - Cut out your eye and place it on scale, giving you one points toward victory.")
         print("2. Boulder - Place it to block enemies attack up to 5 hit points")
@@ -46,7 +46,7 @@ class Player():
                 print("Invalid input")
 
     def __str__(self):
-        return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.displayDeck()}"
+        return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.display_deck()}"
   
     def go_forward(self):
         m = map.Map()

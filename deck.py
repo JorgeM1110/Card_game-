@@ -73,7 +73,7 @@ class Deck:
                         card._max_health += 2
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("Better luck next time")
                     chance = 0 
 
@@ -87,7 +87,7 @@ class Deck:
                         card._max_health += 2
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("Your Luck runs out")
                     chance = 0 
 
@@ -101,7 +101,7 @@ class Deck:
                         card._max_health += 2
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("You got too Greedy")
                     chance = 0 
 
@@ -115,7 +115,7 @@ class Deck:
                         card._max_health += 2
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("Your time has come to end")
                     chance = 0 
 
@@ -129,7 +129,7 @@ class Deck:
                         card._max_health += 2
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("Finally")
                     chance = 0 
             
@@ -142,7 +142,7 @@ class Deck:
                         print("Your power has upgrade to " + str(card._power) + "\n")
                         print("Your max health has upgrade to " + str(card._max_health) + "\n")
                 else:
-                    self.removeCard(0)
+                    self.remove_card(0)
                     print("You fail me") 
                     chance = 0 
 
@@ -150,11 +150,11 @@ class Deck:
             if chance is not 0: 
                 player_choice = input(f" would you like to upgrade again? " + str(chance) + '%' " change\n Y/N\n")
 
-    def sacrifice(self, deadcard, gaincard):
+    def sacrifice(self, deadcard, gain_card):
         if deadcard in self._cards:
             self._cards.remove(deadcard)
-            gaincard.sigil = deadcard.sigil
+            gain_card.sigil = deadcard.sigil
 
-    def removeCard(self, index):
+    def remove_card(self, index):
         return self._cards.pop(index)
 
