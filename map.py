@@ -39,10 +39,10 @@ class Map:
         for i in range(len(self._map)):
             for j in range(len(self._map[i])):
                 if i == loc[0] and j == loc[1]:
-                    str_map += "@"
+                    str_map += "@ "
                 else:
-                    str_map += self._map[i][j]
-            str_map += "\n"
+                    str_map += self._map[i][j] + " "
+            str_map += "\n\n"
         return str_map
 
 

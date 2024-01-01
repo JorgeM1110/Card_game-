@@ -1,15 +1,18 @@
 import card 
 import random
-from cards import bear, bullfrog, skunk, snake, shark, raven, kingfisher, magpie, snappingturtle
+from cards.tropical import dolphin, otter, turtle
+from cards.oceanic import leviathan, manta_ray, shark
+from cards.abyssal import angler, jellyfish, kraken
 
 class Deck:
 
     def __init__(self):
         self._cards = []
-        
-        enemies = [bear.Bear(), snake.Snake(), skunk.Skunk(), 
-                   bullfrog.BullFrog(), shark.Shark(), snappingturtle.SnappingTurtle(), 
-                   kingfisher.KingFisher(), magpie.MagPie(), raven.Raven()]
+                   
+        enemies = [dolphin.Dolphin(), otter.Otter(), turtle.Turtle(),
+                    leviathan.Leviathan(), manta_ray.MantaRay(), shark.Shark(),
+                    angler.Angler(), jellyfish.Jellyfish(), kraken.Kraken()]
+
         for i in enemies:
             for j in range(3):
                 self._cards.append(i)

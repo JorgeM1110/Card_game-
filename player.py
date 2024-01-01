@@ -11,6 +11,10 @@ class Player():
         self._currCost = 0
 
     @property
+    def name(self):
+        return self._name
+
+    @property
     def location(self):
         return self._location
     

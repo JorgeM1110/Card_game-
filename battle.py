@@ -3,7 +3,7 @@ import deck
 import card
 import player
 from boss_file import boss
-from cards import squirrel
+from cards import shrimp
 import check_input
 
 
@@ -75,9 +75,9 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero):
                 card.take_damage(curr_attack[index].power)
                 print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(card.name))
 
-def hero_turn(hero_hand, play_deck, squirrel_count, my_squirrel, curr_hero, scale, upcoming_attack, curr_attack):
+def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
     """ Draws and sacerfices cards, and attacks villian """
-    draw_card(hero_hand, play_deck, squirrel_count, my_squirrel)
+    draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
     done = False
     while not done:
         print("1. Place a card down \n2. End turn")
@@ -89,19 +89,19 @@ def hero_turn(hero_hand, play_deck, squirrel_count, my_squirrel, curr_hero, scal
             done = True
         display_board(upcoming_attack, curr_attack, curr_hero)
 
-def draw_card(hero_hand, play_deck, squirrel_count, my_squirrel):
-    """ User chooses a card of squirrel """
+def draw_card(hero_hand, play_deck, shrimp_count, my_shrimp):
+    """ User chooses a card of shrimp """
     show_hand(hero_hand)
-    print("1. Draw from deck \n2. Draw a squirrel")
+    print("1. Draw from deck \n2. Draw a shrimp")
     choice = check_input.range_int("Enter choice: ", 1, 2)
     if choice == 1:
         hero_hand.append(random_card(play_deck))
         show_hand(hero_hand)
     elif choice == 2:
-        if squirrel_count > 0:
-            hero_hand.append(my_squirrel)
+        if shrimp_count > 0:
+            hero_hand.append(my_shrimp)
             show_hand(hero_hand)
-            squirrel_count -= 1
+            shrimp_count -= 1
 
 def placeCard(hero_hand, curr_hero):
     """ Place and sacerfice cards """
@@ -158,8 +158,8 @@ def battle(hero, villian):
     print("---------- Battle Start! ----------")
     
     # Initializes starting deck and hand
-    squirrel_count = 20
-    my_squirrel = squirrel.Squirrel()
+    shrimp_count = 20
+    my_shrimp = shrimp.Shrimp()
     hero_hand = []
     play_deck = hero._deck 
     play_deck.shuffle()
@@ -183,7 +183,7 @@ def battle(hero, villian):
             print(f"Scale: {scale}")
         # Hero turn
         elif turn == 0:
-            hero_turn(hero_hand, play_deck, squirrel_count, my_squirrel, curr_hero, scale, upcoming_attack, curr_attack)
+            hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 1
             print(f"Scale: {scale}")
 
