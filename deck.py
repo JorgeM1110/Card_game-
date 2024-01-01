@@ -1,14 +1,6 @@
 import card 
 import random
-import bear
-import bullfrog
-import skunk 
-import snake
-import shark
-import raven
-import kingfisher
-import magpie
-import snappingturtle
+from cards import bear, bullfrog, skunk, snake, shark, raven, kingfisher, magpie, snappingturtle
 
 class Deck:
 

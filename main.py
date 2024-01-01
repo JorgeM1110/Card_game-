@@ -1,11 +1,10 @@
 import map
 import player
-import boss
-import deck
-import water_factory
-import wind_factory
-import grass_factory
 import battle 
+import deck
+from boss_file import boss
+from factories import water_factory, wind_factory, grass_factory
+
 
 
 def main():

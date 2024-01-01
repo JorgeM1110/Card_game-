@@ -2,8 +2,8 @@ import random
 import deck
 import card
 import player
-import boss
-import squirrel
+from boss_file import boss
+from cards import squirrel
 import check_input
 
 
@@ -180,10 +180,12 @@ def battle(player, boss):
         if turn == 1:
             bossTurn(boss, upcomingAttack, currAttack, currPlayer)
             turn = 0
+            print(f"Scale: {scale}")
         # Player turn
         elif turn == 0:
             playerTurn(playerHand, playDeck, squirrelCount, mySquirell, currPlayer, scale, upcomingAttack, currAttack)
             turn = 1
+            print(f"Scale: {scale}")
 
 
     # To-do
