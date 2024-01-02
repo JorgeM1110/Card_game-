@@ -162,13 +162,13 @@ def placeCard(hero_hand, curr_hero):
             curr_sac += 1
             print(f"You have sacerficed {choice_card.name} sacerfices: {curr_sac}/{picked_card.cost}")
 
-    cardPlace = False
-    while not cardPlace:
+    card_place = False
+    while not card_place:
         print("Where would you like to place the card? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is None:
             curr_hero[choice - 1] = picked_card
-            cardPlace = True
+            card_place = True
         else:
             print("There is already a card in that slot, pick somewhere else.")
 
