@@ -54,50 +54,57 @@ def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     print("\n~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
     for index, card in enumerate(upcoming_attack):
-        if card == None:
+        if card is None:
             print("None", end=" ")
         else:
-            print(upcoming_attack[index].name, end=" ")
+            print(card.name, end=" ")
     print("-> Upcoming attack")
     print()
 
     counter = 2
     for index, card in enumerate(curr_attack):
-        if card == None:
+        if card is None:
             print("None", end=" ")
         else:
-            print(curr_attack[index].name, end=" ")
+            print(card.name, end=" ")
     print("-> Current attack")
     print()        
     
     counter = 3
     for index, card in enumerate(curr_hero):
-        if card == None:
+        if card is None:
             print("None", end=" ")
         else:
-            print(curr_hero[index].name, end=" ")
+            print(card.name, end=" ")
     print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
 def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
-    curr_attack = upcoming_attack
-    upcoming_attack = [None,None,None,None]
 
-    for index, card in enumerate(upcoming_attack):
-        if random.randint(0, 1) == 1:
-            upcoming_attack[index] = villain._deck.draw_card()
+    if None in upcoming_attack:
+        for index,card in enumerate(upcoming_attack):
+            if random.randint(0, 1) == 1:
+                upcoming_attack[index] = villain._deck.draw_card()
     
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
     for index, card in enumerate(curr_attack):
-        if curr_attack[index] is not None:
+        if card is not None:
             if curr_hero[index] is None:
                 scale += card.power
                 print(f"The villian's {card.name} dealt {card.power} damage to you ")
             else:
                 card.take_damage(curr_attack[index].power)
-                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(card.name))
+                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+    
+    curr_attack[:] = upcoming_attack.copy()
+    
+
+    
+
+
+
 
 def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
     """ Draws and sacerfices cards, and attacks villian """
@@ -180,7 +187,7 @@ def heroAttack(curr_hero, curr_attack, scale):
                 print(f"You have done {card.power} to the villian!")
             else:
                 curr_attack[index].take_damage(card.power)
-                print(f"{card.name} delt {card.power} to {curr_attack.name}")
+                print(f"{card.name} delt {card.power} to {curr_attack[index].name}")
         else:
             print(f"No cards placed in slot {index + 1}")
 
