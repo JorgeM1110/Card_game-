@@ -5,7 +5,7 @@ import player
 from boss_file import boss
 from cards import shrimp
 import check_input
-from terminal_utils import clear_terminal, pause
+from terminal_utils import clear_terminal, pause, delay_print, delay_input, delay
 
 def choose_card(text, deck, return_index=False):
     if all(card is None for card in deck):
