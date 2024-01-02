@@ -1,8 +1,10 @@
 import card 
 import random
+import check_input
 from cards.tropical import dolphin, otter, turtle
 from cards.oceanic import leviathan, manta_ray, shark
 from cards.abyssal import angler, jellyfish, kraken
+from terminal_utils import clear_terminal, pause, delay_print, delay_input, delay
 
 class Deck:
 
@@ -55,33 +57,44 @@ class Deck:
     def remove_card(self, index):
         return self._cards.pop(index)
 
-    def choose_card(text, return_index=False):
-        if all(card is None for card in self._cards):
+    def choose_card(self, text, deck, return_index=False):
+        if all(card is None for card in deck):
             return None
         else:
             print(text)
             counter = 1 
-            for card in self._cards:
+            for card in deck:
                 print(f"{counter}. {card}")
                 print()
                 counter += 1
 
             valid = False
             while not valid:
-                choice = range_int("Enter choice: ", 1, counter - 1)
+                choice = check_input.range_int("Enter choice: ", 1, counter - 1)
 
-                if self._cards[choice - 1] is not None:
+                if deck[choice - 1] is not None:
                     if return_index:
-                        return self._cards[choice - 1], choice - 1
+                        return deck[choice - 1], choice - 1
                     else:
-                        return self._cards[choice - 1]
+                        return deck[choice - 1]
                 else:
                     print("There's no card there, choose again. ")
 
-    def sacrifice(self, deadcard, gain_card):
-        if deadcard in self._cards:
-            self._cards.remove(deadcard)
-            gain_card.sigil = deadcard.sigil
+
+    def sacrifice(self):
+        print("Here you will sacerfice a card and transfer its sigil to another ...")
+        dead_card, dead_index = self.choose_card("Choose a card to sacerfice (You will lose this card)", self._cards, return_index=True)
+        print(f"You sentenced {dead_card.name} to death ...")
+        gain_card, gain_index = self.choose_card("Choose a card that will have the new sigil", self._cards, return_index=True)
+        print(f"You chose the {gain_card.name} to give it more power")
+
+        if gain_card.sigil is None:
+            self._cards[dead_index].sigil = dead_card.sigil
+        else:
+            self._cards[dead_index].sigil += f" and {dead_card.sigil}" 
+        
+        print(f"{gain_card.name} now has the sigil {gain_card.sigil}")
+
     
     def upgrade(self, card):
         cards = random.randint(1,2)
