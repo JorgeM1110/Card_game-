@@ -5,7 +5,30 @@ import player
 from boss_file import boss
 from cards import shrimp
 import check_input
+from terminal_utils import clear_terminal, pause
 
+def choose_card(text, deck, return_index=False):
+    if all(card is None for card in deck):
+        return None
+    else:
+        print(text)
+        counter = 1 
+        for card in deck:
+            print(f"{counter}. {card}")
+            print()
+            counter += 1
+
+        valid = False
+        while not valid:
+            choice = check_input.range_int("Enter choice: ", 1, counter - 1)
+
+            if deck[choice - 1] is not None:
+                if return_index:
+                    return deck[choice - 1], choice - 1
+                else:
+                    return deck[choice - 1]
+            else:
+                print("There's no card there, choose again. ")
 
 def random_card(deck):
     """ From a deck of cards, pick a random card """
@@ -25,8 +48,9 @@ def show_hand(hand):
 
     print("~~~~~~~~~~~~~~~~~~~~\n")
 
-def display_board(upcoming_attack, curr_attack, curr_hero):
+def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     """ hows current board """
+    print(f"Scale: {scale}")
     print("\n~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
     for index, card in enumerate(upcoming_attack):
@@ -55,7 +79,7 @@ def display_board(upcoming_attack, curr_attack, curr_hero):
     print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-def villain_turn(villain, upcoming_attack, curr_attack, curr_hero):
+def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
     curr_attack = upcoming_attack
     upcoming_attack = [None,None,None,None]
@@ -64,7 +88,7 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero):
         if random.randint(0, 1) == 1:
             upcoming_attack[index] = villain._deck.draw_card()
     
-    display_board(upcoming_attack, curr_attack, curr_hero)
+    display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
     for index, card in enumerate(curr_attack):
         if curr_attack[index] is not None:
@@ -80,27 +104,31 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
     done = False
     while not done:
-        print("1. Place a card down \n2. End turn")
-        choice = check_input.range_int("Enter choice: ", 1, 2)
+        print("\n1. Look at your cards \n2. Look at board \n3. Place a card down \n4. End turn")
+        choice = check_input.range_int("Enter choice: ", 1, 4)
         if choice == 1:
-            placeCard(hero_hand, curr_hero)
+            show_hand(hero_hand)
         elif choice == 2:
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
+        elif choice == 3:
+            placeCard(hero_hand, curr_hero)
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
+        else:
             heroAttack(curr_hero, curr_attack, scale)
             done = True
-        display_board(upcoming_attack, curr_attack, curr_hero)
 
 def draw_card(hero_hand, play_deck, shrimp_count, my_shrimp):
     """ User chooses a card of shrimp """
-    show_hand(hero_hand)
     print("1. Draw from deck \n2. Draw a shrimp")
     choice = check_input.range_int("Enter choice: ", 1, 2)
     if choice == 1:
-        hero_hand.append(random_card(play_deck))
-        show_hand(hero_hand)
+        new_card = random_card(play_deck)
+        hero_hand.append(new_card)
+        print(f"\nYou drew a {new_card.name}.")
     elif choice == 2:
         if shrimp_count > 0:
             hero_hand.append(my_shrimp)
-            show_hand(hero_hand)
+            print("\nYou drew a shrimp.")
             shrimp_count -= 1
 
 def placeCard(hero_hand, curr_hero):
@@ -110,7 +138,8 @@ def placeCard(hero_hand, curr_hero):
     has_enough = 0
     picked_card = None
     while not done_choosing:
-        picked_card, index = check_input.choose_card("\nChoose a card from your hand", hero_hand, return_index=True)
+        #picked_card, index = check_input.choose_card("\nChoose a card from your hand", hero_hand, return_index=True)
+        picked_card, index = choose_card("\nChoose a card from your hand", hero_hand, return_index=True)
         if picked_card.cost > 0: 
             for card in curr_hero:
                 if card is not None:
@@ -127,7 +156,8 @@ def placeCard(hero_hand, curr_hero):
         print(f"\nThis card needs {picked_card.cost} sacerfices. Choose wisely.")
         while curr_sac < picked_card.cost:
             print("Which card would you like to sacerfice?")
-            choice_card, index= check_input.choose_card("", curr_hero, return_index=True)
+            #choice_card, index= check_input.choose_card("", curr_hero, return_index=True)
+            choice_card, index = choose_card("", curr_hero, return_index=True)
             curr_hero[index] = None
             curr_sac += 1
             print(f"You have sacerficed {choice_card.name} sacerfices: {curr_sac}/{picked_card.cost}")
@@ -157,9 +187,9 @@ def heroAttack(curr_hero, curr_attack, scale):
 def battle(hero, villian):
     print("---------- Battle Start! ----------")
     
-    # Initializes starting deck and hand
     shrimp_count = 20
     my_shrimp = shrimp.Shrimp()
+
     hero_hand = []
     play_deck = hero._deck 
     play_deck.shuffle()
@@ -175,17 +205,15 @@ def battle(hero, villian):
     curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
-        print(f"Scale: {scale}")
         # villian turn
         if turn == 1:
-            villain_turn(villian, upcoming_attack, curr_attack, curr_hero)
+            villain_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 0
-            print(f"Scale: {scale}")
         # Hero turn
-        elif turn == 0:
+        else:
+            pause()
             hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 1
-            print(f"Scale: {scale}")
 
 
     # To-do

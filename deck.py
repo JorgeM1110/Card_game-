@@ -27,6 +27,16 @@ class Deck:
             raise StopIteration
         else:
             return self._cards[self._i]
+    
+    def __len__(self):
+        """
+        return the number of cards remaining in the deck.
+        """
+        return len(self._cards)
+
+    def __str__(self):
+        for card in self._cards:
+            print(card)
         
     def shuffle(self):
         """
@@ -41,16 +51,37 @@ class Deck:
         if len(self._cards) > 0:
             top_card = self._cards.pop(0)
             return top_card
-        
-    def __len__(self):
-        """
-        return the number of cards remaining in the deck.
-        """
-        return len(self._cards)
 
-    def __str__(self):
-        for card in self._cards:
-            print(card)
+    def remove_card(self, index):
+        return self._cards.pop(index)
+
+    def choose_card(text, return_index=False):
+        if all(card is None for card in self._cards):
+            return None
+        else:
+            print(text)
+            counter = 1 
+            for card in self._cards:
+                print(f"{counter}. {card}")
+                print()
+                counter += 1
+
+            valid = False
+            while not valid:
+                choice = range_int("Enter choice: ", 1, counter - 1)
+
+                if self._cards[choice - 1] is not None:
+                    if return_index:
+                        return self._cards[choice - 1], choice - 1
+                    else:
+                        return self._cards[choice - 1]
+                else:
+                    print("There's no card there, choose again. ")
+
+    def sacrifice(self, deadcard, gain_card):
+        if deadcard in self._cards:
+            self._cards.remove(deadcard)
+            gain_card.sigil = deadcard.sigil
     
     def upgrade(self, card):
         cards = random.randint(1,2)
@@ -152,12 +183,3 @@ class Deck:
             chance //= 2
             if chance is not 0: 
                 player_choice = input(f" would you like to upgrade again? " + str(chance) + '%' " change\n Y/N\n")
-
-    def sacrifice(self, deadcard, gain_card):
-        if deadcard in self._cards:
-            self._cards.remove(deadcard)
-            gain_card.sigil = deadcard.sigil
-
-    def remove_card(self, index):
-        return self._cards.pop(index)
-

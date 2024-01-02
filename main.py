@@ -3,15 +3,8 @@ import player
 import battle 
 import deck
 import check_input
+from terminal_utils import clear_terminal, pause
 from boss_file import boss
-
-import os
-
-def pause():
-    input("Press Enter to continue...")
-
-def clear_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def welcome_message(name):
     print("\noOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoO\n")
@@ -48,24 +41,17 @@ def main():
         elif menu_choice == "4":
             quit = True 
 
+        clear_terminal()
+
         if move == 'I':
             hero.shop_item()
         elif move == 'U':
             hero.display_deck()
             hero._deck.upgrade(hero._deck._cards[0])
-        if move == 'B':
-            print("Battle")
+        elif move == 'B':
             battle.battle(hero, villain)
-
         elif move == 'A':
             hero._deck.sacrifice()
         
-
-            
         print()
-            
-
-
-
-
 main()
