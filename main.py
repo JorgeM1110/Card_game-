@@ -7,17 +7,19 @@ from terminal_utils import clear_terminal, pause, delay_print, delay_input, dela
 from boss_file import boss
 
 def welcome_message(name):
+    
     delay_print(f"\nWelcome to AquaScrypt {name}! \n")
     delay_print("Will you make it back to the surface with undiscovered treasures?...")
     delay_print("or will the sea consume you...")
     delay(1.5)
-    delay_print(f"\nWell {name}, good luck diving...\n")
+    delay_print(f"\nWell {name}, good luck diving!\n")
 
 
 
 def main():
     clear_terminal()
-    name = delay_input("What is your name, diver? ")
+    delay_print("What is your name, diver? ")
+    name = input("Name: ")
     welcome_message(name)
 
     hero = player.Player(name)
