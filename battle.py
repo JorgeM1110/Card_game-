@@ -185,7 +185,7 @@ def heroAttack(curr_hero, curr_attack, scale):
             print(f"No cards placed in slot {index + 1}")
 
 def battle(hero, villian):
-    print("---------- Battle Start! ----------")
+    print("------------- Battle -------------")
     
     shrimp_count = 20
     my_shrimp = shrimp.Shrimp()
