@@ -82,9 +82,8 @@ def display_board(upcoming_attack, curr_attack, curr_hero, scale):
 def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
 
-    if None in upcoming_attack:
-        for index,card in enumerate(upcoming_attack):
-            if random.randint(0, 1) == 1:
+    for index, card in enumerate(upcoming_attack):
+        if random.randint(0, 1) == 1:
                 upcoming_attack[index] = villain._deck.draw_card()
     
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
@@ -97,8 +96,16 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
             else:
                 card.take_damage(curr_attack[index].power)
                 print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+
+    for index in range(len(upcoming_attack)):
+        if upcoming_attack[index] is not None and curr_attack[index] is None:
+            curr_attack[index] = upcoming_attack[index]
+
+    #upcoming_attack = [None] * len(upcoming_attack)
+
+    #display_board(upcoming_attack, curr_attack, curr_hero, scale)
+
     
-    curr_attack[:] = upcoming_attack.copy()
     
 
     
