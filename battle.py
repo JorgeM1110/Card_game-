@@ -83,8 +83,8 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
 
     for index, card in enumerate(upcoming_attack):
-        if random.randint(0, 1) == 1:
-                upcoming_attack[index] = villain._deck.draw_card()
+        if random.randint(0, 1) == 1: 
+            upcoming_attack[index] = villain._deck.draw_card()
     
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
