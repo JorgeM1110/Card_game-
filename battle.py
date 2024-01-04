@@ -84,11 +84,11 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
 
     
 
-    for index, card in enumerate(upcoming_attack):
-        if random.randint(0, 1) == 1 and upcoming_attack[index] is None: 
-            upcoming_attack[index] = villain._deck.draw_card()
+    # for index, card in enumerate(upcoming_attack):
+    #     if random.randint(0, 1) == 1 and upcoming_attack[index] is None: 
+    #         upcoming_attack[index] = villain._deck.draw_card()
     
-    display_board(upcoming_attack, curr_attack, curr_hero, scale)
+    # display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
     for index, card in enumerate(curr_attack):
         if card is not None:
@@ -104,19 +104,7 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
             curr_attack[index] = upcoming_attack[index]
             if upcoming_attack[index] is not None:
                 upcoming_attack[index] = None
-
-
-
-
     #display_board(upcoming_attack, curr_attack, curr_hero, scale)
-
-    
-    
-
-    
-
-
-
 
 def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
     """ Draws and sacerfices cards, and attacks villian """
@@ -224,15 +212,21 @@ def battle(hero, villian):
     curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
+        for index, card in enumerate(upcoming_attack):
+            if random.randint(0, 1) == 1 and upcoming_attack[index] is None: 
+                upcoming_attack[index] = villian._deck.draw_card()
+                
+        display_board(upcoming_attack, curr_attack, curr_hero, scale)
+
         # villian turn
-        if turn == 1:
-            villain_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
-            turn = 0
+        if turn == 0:
+            villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
+            turn = 1
         # Hero turn
         else:
             pause()
             hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
-            turn = 1
+            turn = 0
 
 
     # To-do
