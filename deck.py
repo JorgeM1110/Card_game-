@@ -82,20 +82,57 @@ class Deck:
 
 
     def sacrifice(self):
-        print("Here you will sacerfice a card and transfer its sigil to another ...")
-        dead_card, dead_index = self.choose_card("Choose a card to sacerfice (You will lose this card)", self._cards, return_index=True)
-        print(f"You sentenced {dead_card.name} to death ...")
-        gain_card, gain_index = self.choose_card("Choose a card that will have the new sigil", self._cards, return_index=True)
-        print(f"You chose the {gain_card.name} to give it more power")
+        print("------------- Sacrifice -------------")
+        print("Here you will sacerfice a card and either transfer its sigil or one of the its stats to another ...\n")
+        pause()
+        clear_terminal()
 
-        if gain_card.sigil is None:
-            self._cards[dead_index].sigil = dead_card.sigil
-        else:
-            self._cards[dead_index].sigil += f" and {dead_card.sigil}" 
+        print("Choose a card to sacerfice (You will lose this card)")
+        counter = 1
+        for index, card in enumerate(self._cards):
+            print(f"{counter}. {self._cards[index].name}")
+            counter += 1
         
-        print(f"{gain_card.name} now has the sigil {gain_card.sigil}")
+        choice = check_input.range_int("\nEnter choice: ", 1, counter)
+        sac_card = self._cards[choice - 1]
+        self.remove_card(choice - 1)
+        print(f"You have chosen the {sac_card.name}\n")
+        pause()
+        clear_terminal()
+        print(f"What would you like to transfer the: \n1. {sac_card.sigil} sigil \n2. Cost ({sac_card.cost}) \n3. Power ({sac_card.power}) \n4. Health ({sac_card.hp})")
+        gain_choice = check_input.range_int("\nEnter choice: ", 1, 4)
+        print()
+        pause()
+        clear_terminal()
+            
+        print("Now choose a card to gain its new stat or sigil")
+        counter = 1
+        for index, card in enumerate(self._cards):
+            print(f"{counter}. {self._cards[index].name}")
+            counter += 1
+        choice = check_input.range_int("\nEnter choice: ", 1, counter)
+        gain_card = self._cards[choice - 1]
+        print()
+        clear_terminal()
 
-    
+        print(gain_card)
+        print("\nturned to\n")
+
+        if gain_choice == 1:
+            gain_card.sigil = f"{sac_card.sigil} and {gain_card.sigil}"
+        elif gain_choice == 2:
+            gain_card.cost = sac_card.cost
+        elif gain_choice == 3:
+            gain_card.power = sac_card.power
+        else:
+            gain_card.hp = sac_card.hp
+            gain_card.max_health = sac_card.max_health
+        
+        print(gain_card)
+        print()
+        pause()
+        clear_terminal()
+
     def upgrade(self, card):
         cards = random.randint(1,2)
         if cards == 1:

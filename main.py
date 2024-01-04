@@ -18,15 +18,17 @@ def welcome_message(name):
 
 def main():
     clear_terminal()
-    delay_print("What is your name, diver? ")
-    name = input("Name: ")
-    welcome_message(name)
+    # delay_print("What is your name, diver? ")
+    # name = input("Name: ")
+    # welcome_message(name)
+    
+    name = "Joe"
 
     hero = player.Player(name)
     villain = boss.Boss("Jeff")
     game_map = map.Map()
 
-    pause()
+    # pause()
     clear_terminal()
     
     quit = False 

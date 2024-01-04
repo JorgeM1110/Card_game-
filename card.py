@@ -24,24 +24,52 @@ class Card:
         return self._name
 
     @property
+    def max_health(self):
+        return self._max_health
+    
+    @max_health.setter
+    def max_health(self, value):
+        self._max_health = value
+
+    @property
     def hp(self):
         """ Getter for health """
         return self._hp
+    
+    @hp.setter
+    def hp(self, value):
+        """ Getter for health """
+        self._hp = value
 
     @property
     def power(self):
         """ Getter for power """
         return self._power
+    
+    @power.setter
+    def power(self, value):
+        """ Getter for health """
+        self._power = value
 
     @property
     def cost(self):
         """ Getter for cost """
         return self._cost
 
+    @cost.setter
+    def cost(self, value):
+        """ Getter for health """
+        self._cost = value
+
     @property
     def sigil(self):
         """ Getter for sigil """
         return self._sigil
+
+    @sigil.setter
+    def sigil(self, value):
+        """ Getter for health """
+        self._sigil = value
 
     def take_damage(self, dmg):
         """ Takes damge, subtracts health from damage """
