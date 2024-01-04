@@ -212,15 +212,18 @@ def battle(hero, villian):
     curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
+
         for index, card in enumerate(upcoming_attack):
             if random.randint(0, 1) == 1 and upcoming_attack[index] is None: 
                 upcoming_attack[index] = villian._deck.draw_card()
-                
+
         display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
         # villian turn
         if turn == 0:
             villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
+            pause()
+            #touch
             turn = 1
         # Hero turn
         else:
