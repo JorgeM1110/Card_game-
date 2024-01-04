@@ -82,8 +82,10 @@ def display_board(upcoming_attack, curr_attack, curr_hero, scale):
 def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
 
+    
+
     for index, card in enumerate(upcoming_attack):
-        if random.randint(0, 1) == 1: 
+        if random.randint(0, 1) == 1 and upcoming_attack[index] is None: 
             upcoming_attack[index] = villain._deck.draw_card()
     
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
@@ -100,8 +102,11 @@ def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
     for index in range(len(upcoming_attack)):
         if upcoming_attack[index] is not None and curr_attack[index] is None:
             curr_attack[index] = upcoming_attack[index]
+            if upcoming_attack[index] is not None:
+                upcoming_attack[index] = None
 
-    #upcoming_attack = [None] * len(upcoming_attack)
+
+
 
     #display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
