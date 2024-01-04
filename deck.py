@@ -80,7 +80,6 @@ class Deck:
                 else:
                     print("There's no card there, choose again. ")
 
-
     def sacrifice(self):
         print("------------- Sacrifice -------------")
         print("Here you will sacerfice a card and either transfer its sigil or one of the its stats to another ...\n")
