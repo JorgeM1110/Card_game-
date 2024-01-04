@@ -220,7 +220,7 @@ def battle(hero, villian):
 
         # villian turn
         if turn == 0:
-            villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
+            villain_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 1
         # Hero turn
         else:
