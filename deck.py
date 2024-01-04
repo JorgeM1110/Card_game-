@@ -57,13 +57,13 @@ class Deck:
     def remove_card(self, index):
         return self._cards.pop(index)
 
-    def choose_card(self, text, deck, return_index=False):
-        if all(card is None for card in deck):
+    def choose_card(self, text, return_index=False):
+        if all(card is None for card in self._cards):
             return None
         else:
             print(text)
             counter = 1 
-            for card in deck:
+            for card in self._cards:
                 print(f"{counter}. {card}")
                 print()
                 counter += 1
@@ -72,11 +72,11 @@ class Deck:
             while not valid:
                 choice = check_input.range_int("Enter choice: ", 1, counter - 1)
 
-                if deck[choice - 1] is not None:
+                if self._cards[choice - 1] is not None:
                     if return_index:
-                        return deck[choice - 1], choice - 1
+                        return self._cards[choice - 1], choice - 1
                     else:
-                        return deck[choice - 1]
+                        return self._cards[choice - 1]
                 else:
                     print("There's no card there, choose again. ")
 
@@ -135,13 +135,15 @@ class Deck:
     def upgrade(self, card):
         cards = random.randint(1,2)
         if cards == 1:
+            print("You came to visit Aquaman, and he grants you more ... POWER")
+            print(f"Your power has been upgraded from {str(card._power)} to {str(card._power + 1)}\n")
             card._power += 1
-            print("Your power has upgrade to " + str(card._power) + "\n")
         else:
-            card._max_health += 1
+            print("You came to visit Aquaman, and he grants you more ... HEALTH")
             print("Your max health has upgrade to " + str(card._max_health) + "\n")
+            card._max_health += 1
         
-        player_choice = input(f" would you like to upgrade again? 50% change\n Y/N\n")
+        player_choice = input(f"Aquaman is getting hangry\nWould you like to upgrade again? 50% change\n Y/N\n")
         chance = 50
 
         while player_choice == 'Y' or player_choice == 'y' and chance > 0 :

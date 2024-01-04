@@ -52,8 +52,11 @@ def main():
         if move == 'I':
             hero.shop_item()
         elif move == 'U':
-            hero.display_deck()
-            hero._deck.upgrade(hero._deck._cards[0])
+            chosen_card = hero._deck.choose_card("Choose a card to upgrade ", return_index=False)
+            print(f"\nYou chose the {chosen_card.name}\n")
+            pause()
+            clear_terminal()
+            hero._deck.upgrade(chosen_card)
         elif move == 'B':
             battle.battle(hero, villian)
         elif move == 'A':
