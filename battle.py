@@ -79,7 +79,7 @@ def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-def villain_turn(villain, upcoming_attack, curr_attack, curr_hero, scale):
+def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
     """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
 
     

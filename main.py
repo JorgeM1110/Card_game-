@@ -25,7 +25,7 @@ def main():
     name = "Joe"
 
     hero = player.Player(name)
-    villain = boss.Boss("Jeff")
+    villian = boss.Boss("Jeff")
     game_map = map.Map()
 
     # pause()
@@ -55,7 +55,7 @@ def main():
             hero.display_deck()
             hero._deck.upgrade(hero._deck._cards[0])
         elif move == 'B':
-            battle.battle(hero, villain)
+            battle.battle(hero, villian)
         elif move == 'A':
             hero._deck.sacrifice()
         
