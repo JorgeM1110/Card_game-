@@ -1,6 +1,7 @@
 import deck
 import map
 import random
+from terminal_utils import clear_terminal, pause, delay_print, delay_input, delay
 
 class Player():
     def __init__(self, name):
@@ -29,25 +30,30 @@ class Player():
             count += 1
 
     def shop_item(self):
-        print("Welcome to meh shop! \nPick whichever tickles your fancy!")
+        print("Welcome to meh shop! \nPick whichever tickles your fancy!\n")
         print("1. Dagger - Cut out your eye and place it on scale, giving you one points toward victory.")
         print("2. Boulder - Place it to block enemies attack up to 5 hit points")
-        print("3. Squirrel Bottle - A squirell will go right into your hand")
+        print("3. Shrimp Bottle - A shrimp will go right into your hand")
 
-        flag = False
-        while not flag:
+        done = False
+        while not done:
             choice = input("Your choice: ")
             if choice == "1":
                 self._items.append("Dagger")
-                flag = True
+                done = True
             elif choice == "2":
                 self._items.append("Boulder")
-                flag = True
+                done = True
             elif choice == "3":
-                self._items.append("Squirrel Bottle")
-                flag = True
+                self._items.append("Shrimp Bottle")
+                done = True
             else:
-                print("Invalid input")
+                print("Invalid input - between 1 - 3")
+            
+        print("\nYour current items:", " ".join(self._items))
+        print()
+        pause()
+        clear_terminal()
 
     def __str__(self):
         return f"Name: {self._name} \nItems: {self.displayItems()} \nDeck: {self.display_deck()}"
