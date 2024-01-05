@@ -44,7 +44,3 @@ class Map:
                     str_map += self._map[i][j] + " "
             str_map += "\n\n"
         return str_map
-
-
-
-

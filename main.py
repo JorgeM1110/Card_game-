@@ -14,8 +14,6 @@ def welcome_message(name):
     delay(1.5)
     delay_print(f"\nWell {name}, good luck diving!\n")
 
-
-
 def main():
     clear_terminal()
     # delay_print("What is your name, diver? ")
@@ -52,11 +50,8 @@ def main():
         if move == 'I':
             hero.shop_item()
         elif move == 'U':
-            chosen_card = hero._deck.choose_card("Choose a card to upgrade ", return_index=False)
-            print(f"\nYou chose the {chosen_card.name}\n")
-            pause()
             clear_terminal()
-            hero._deck.upgrade(chosen_card)
+            hero._deck.upgrade()
         elif move == 'B':
             battle.battle(hero, villian)
         elif move == 'A':
