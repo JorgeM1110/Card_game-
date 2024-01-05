@@ -208,7 +208,7 @@ def battle(hero, villian):
     villian._deck.shuffle()
     
     scale = 0
-    turn = 1
+    turn = 0
     upcoming_attack = [None, None, None, None]
     curr_attack =     [None, None, None, None]
     curr_hero =     [None, None, None, None]
@@ -219,7 +219,7 @@ def battle(hero, villian):
             if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
                 upcoming_attack[index] = villian._deck.draw_card()
         
-        if turn == 1:
+        if turn == 0:
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
         
