@@ -50,7 +50,7 @@ def show_hand(hand):
 
 def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     """ hows current board """
-    print(f"Scale: {scale}")
+    print(f"\nScale: {scale}")
     print("\n~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
     for index, card in enumerate(upcoming_attack):
@@ -99,17 +99,21 @@ def villian_attack(curr_attack, curr_hero, scale):
     for index, card in enumerate(curr_attack):
         if card is not None:
             if curr_hero[index] is None:
-                scale += card.power
+                scale -= card.power
                 print(f"The villian's {card.name} dealt {card.power} damage to you ")
             else:
-                card.take_damage(curr_attack[index].power)
-                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
-
+                if curr_hero[index] is not None:
+                    curr_hero[index].take_damage(curr_attack[index].power)
+                    print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+    return scale 
 def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
     """ Pushes it to curr_attack and attacks hero """
 
     villian_draw_card(villian, upcoming_attack)
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
+    return villian_attack(curr_attack, curr_hero, scale) 
+ 
+    
 
     
 
@@ -129,9 +133,9 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
         else:
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
-            heroAttack(curr_hero, curr_attack, scale)
             villian_play_card(upcoming_attack, curr_attack)
             done = True
+    return heroAttack(curr_hero, curr_attack, scale)
 
 def draw_card(hero_hand, play_deck, shrimp_count, my_shrimp):
     """ User chooses a card of shrimp """
@@ -192,13 +196,14 @@ def heroAttack(curr_hero, curr_attack, scale):
     for index, card in enumerate(curr_hero):
         if card is not None:
             if curr_attack[index] is None:
-                scale -= card.power
-                print(f"You have done {card.power} to the villian!")
+                scale += card.power
+                print(f"Your {card.name} have done {card.power} to the villian!")
             else:
                 curr_attack[index].take_damage(card.power)
                 print(f"{card.name} delt {card.power} to {curr_attack[index].name}")
         else:
             print(f"No cards placed in slot {index + 1}")
+    return scale 
 
 def battle(hero, villian):
     print("------------- Battle -------------")
@@ -225,14 +230,12 @@ def battle(hero, villian):
 
         # villian turn
         if turn == 0:
-            villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
-            villian_attack(curr_attack, curr_hero, scale)
-
+            scale = villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 1
         # Hero turn
         else:
             pause()
-            hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
+            scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 0
 
         
