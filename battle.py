@@ -79,18 +79,23 @@ def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
-    """ Randomly add cards to upcoming_attack, pushes it to curr_attack and attacks hero """
+def villian_draw_card(villian, upcoming_attack):
+    """ Randomly add cards to upcoming_attack """
+    for index, card in enumerate(upcoming_attack):
+        if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
+            upcoming_attack[index] = villian._deck.draw_card()
 
+def villian_play_card(upcoming_attack, curr_attack):
+    """ Pushes it to curr_attack"""
     
+    for index in range(len(upcoming_attack)):
+        if upcoming_attack[index] is not None and curr_attack[index] is None:
+            curr_attack[index] = upcoming_attack[index]
+            if upcoming_attack[index] is not None:
+                upcoming_attack[index] = None
 
-    #for index, card in enumerate(upcoming_attack):
-        #if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
-            #upcoming_attack[index] = villian._deck.draw_card()
-
-    #display_board(upcoming_attack, curr_attack, curr_hero, scale)
-    
-
+def villian_attack(curr_attack, curr_hero, scale):
+    """ attacks hero """
     for index, card in enumerate(curr_attack):
         if card is not None:
             if curr_hero[index] is None:
@@ -100,11 +105,12 @@ def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
                 card.take_damage(curr_attack[index].power)
                 print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
 
-    for index in range(len(upcoming_attack)):
-        if upcoming_attack[index] is not None and curr_attack[index] is None:
-            curr_attack[index] = upcoming_attack[index]
-            if upcoming_attack[index] is not None:
-                upcoming_attack[index] = None
+def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
+    """ Pushes it to curr_attack and attacks hero """
+
+    villian_draw_card(villian, upcoming_attack)
+    display_board(upcoming_attack, curr_attack, curr_hero, scale)
+
     
 
 def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
@@ -124,6 +130,7 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
         else:
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
             heroAttack(curr_hero, curr_attack, scale)
+            villian_play_card(upcoming_attack, curr_attack)
             done = True
 
 def draw_card(hero_hand, play_deck, shrimp_count, my_shrimp):
@@ -214,25 +221,20 @@ def battle(hero, villian):
     curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
-
-        for index, card in enumerate(upcoming_attack):
-            if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
-                upcoming_attack[index] = villian._deck.draw_card()
         
-        if turn == 0:
-            display_board(upcoming_attack, curr_attack, curr_hero, scale)
 
-        
         # villian turn
         if turn == 0:
             villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
+            villian_attack(curr_attack, curr_hero, scale)
+
             turn = 1
         # Hero turn
         else:
             pause()
             hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
-            
             turn = 0
+
         
         
 
