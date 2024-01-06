@@ -129,8 +129,8 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
             placeCard(hero_hand, curr_hero)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
         else:
-            display_board(upcoming_attack, curr_attack, curr_hero, scale)
             villian_play_card(upcoming_attack, curr_attack)
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
             done = True
     return heroAttack(curr_hero, curr_attack, scale)
 
