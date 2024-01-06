@@ -51,7 +51,7 @@ def show_hand(hand):
 def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     """ hows current board """
     print(f"\nScale: {scale}")
-    print("\n~~~~~~~~ The Board ~~~~~~~~")
+    print("~~~~~~~~ The Board ~~~~~~~~")
     counter = 1
     for index, card in enumerate(upcoming_attack):
         if card is None:
@@ -94,7 +94,7 @@ def villian_play_card(upcoming_attack, curr_attack):
             if upcoming_attack[index] is not None:
                 upcoming_attack[index] = None
 
-def villian_attack(curr_attack, curr_hero, scale):
+def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
     """ attacks hero """
     for index, card in enumerate(curr_attack):
         if card is not None:
@@ -105,18 +105,15 @@ def villian_attack(curr_attack, curr_hero, scale):
                 if curr_hero[index] is not None:
                     curr_hero[index].take_damage(curr_attack[index].power)
                     print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+    display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
+
 def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
     """ Pushes it to curr_attack and attacks hero """
 
     villian_draw_card(villian, upcoming_attack)
-    display_board(upcoming_attack, curr_attack, curr_hero, scale)
-    return villian_attack(curr_attack, curr_hero, scale) 
+    return villian_attack(upcoming_attack, curr_attack, curr_hero, scale) 
  
-    
-
-    
-
 def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
     """ Draws and sacerfices cards, and attacks villian """
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
@@ -230,11 +227,13 @@ def battle(hero, villian):
 
         # villian turn
         if turn == 0:
+            print("\n---- Villain Turn ----")
             scale = villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 1
         # Hero turn
         else:
             pause()
+            print("\n---- Hero Turn ----")
             scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 0
 
