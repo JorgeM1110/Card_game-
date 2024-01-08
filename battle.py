@@ -102,9 +102,10 @@ def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
                 scale -= card.power
                 print(f"The villian's {card.name} dealt {card.power} damage to you ")
             else:
-                if curr_hero[index] is not None:
-                    curr_hero[index].take_damage(curr_attack[index].power)
-                    print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+                curr_hero[index].take_damage(curr_attack[index].power)
+                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+                if curr_hero[index].hp == 0:
+                    curr_hero[index] = None
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
 
@@ -119,8 +120,8 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
     done = False
     while not done:
-        print("\n1. Look at your cards \n2. Look at board \n3. Place a card down \n4. End turn")
-        choice = check_input.range_int("Enter choice: ", 1, 4)
+        print("\n1. Look at your cards \n2. Look at board \n3. Place a card down \n4. Use an item \n5. Use Sigil \n6. End turn")
+        choice = check_input.range_int("Enter choice: ", 1, 6)
         if choice == 1:
             show_hand(hero_hand)
         elif choice == 2:
@@ -128,6 +129,11 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
         elif choice == 3:
             placeCard(hero_hand, curr_hero)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
+        elif choice == 4:
+            pass
+
+        elif choice == 5:
+            pass
         else:
             villian_play_card(upcoming_attack, curr_attack)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
@@ -198,6 +204,8 @@ def heroAttack(curr_hero, curr_attack, scale):
             else:
                 curr_attack[index].take_damage(card.power)
                 print(f"{card.name} delt {card.power} to {curr_attack[index].name}")
+                if curr_attack[index].hp == 0:
+                    curr_attack[index] = None 
         else:
             print(f"No cards placed in slot {index + 1}")
     return scale 
