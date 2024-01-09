@@ -131,10 +131,11 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
             placeCard(hero_hand, curr_hero)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
         elif choice == 4:
-            pass
+            use_item(hero_hand, play_deck,curr_hero)
 
         elif choice == 5:
-            pass
+            use_sigil(hero_hand, play_deck,curr_hero)
+
         else:
             villian_play_card(upcoming_attack, curr_attack)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
@@ -216,7 +217,16 @@ def use_item(hero_hand, play_deck,curr_hero):
     pass
 
 def use_sigil(hero_hand, play_deck,curr_hero):
-    pass
+    picked_card = None 
+    card_place = False
+    while not card_place:
+        print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
+        choice = check_input.range_int("Enter choice: ", 1, 4)
+        if curr_hero[choice - 1] is not None:
+            card_place = True
+
+        else:
+            print("There are no card in that slot, pick somewhere else.")
 
 def battle(hero, villian):
     print("------------- Battle -------------")
