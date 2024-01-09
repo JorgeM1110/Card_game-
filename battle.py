@@ -210,7 +210,13 @@ def heroAttack(curr_hero, curr_attack, scale):
                     curr_attack[index] = None 
         else:
             print(f"No cards placed in slot {index + 1}")
-    return scale 
+    return scale
+
+def use_item(hero_hand, play_deck,curr_hero):
+    pass
+
+def use_sigil(hero_hand, play_deck,curr_hero):
+    pass
 
 def battle(hero, villian):
     print("------------- Battle -------------")
