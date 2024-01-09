@@ -105,6 +105,7 @@ def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
                 curr_hero[index].take_damage(curr_attack[index].power)
                 print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
                 if curr_hero[index].hp == 0:
+                    print(f"villian {card.name} has slayed your {curr_hero[index].name}")
                     curr_hero[index] = None
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
@@ -203,8 +204,9 @@ def heroAttack(curr_hero, curr_attack, scale):
                 print(f"Your {card.name} have done {card.power} to the villian!")
             else:
                 curr_attack[index].take_damage(card.power)
-                print(f"{card.name} delt {card.power} to {curr_attack[index].name}")
+                print(f"Your {card.name} delt {card.power} damage to villian {curr_attack[index].name}")
                 if curr_attack[index].hp == 0:
+                    print(f"Your {card.name} has slayed villian {curr_attack[index].name} ")
                     curr_attack[index] = None 
         else:
             print(f"No cards placed in slot {index + 1}")
@@ -235,13 +237,13 @@ def battle(hero, villian):
 
         # villian turn
         if turn == 0:
-            print("\n---- Villain Turn ----")
+            print("\n---- Villain Turn ----\n")
             scale = villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 1
         # Hero turn
         else:
             pause()
-            print("\n---- Hero Turn ----")
+            print("\n---- Hero Turn ----\n")
             scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
             turn = 0
 
