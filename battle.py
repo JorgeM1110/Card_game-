@@ -216,13 +216,30 @@ def heroAttack(curr_hero, curr_attack, scale):
 def use_item(hero_hand, play_deck,curr_hero):
     pass
 
-def use_sigil(hero_hand, play_deck,curr_hero):
+def use_sigil(hero_hand, play_deck, villian, upcoming_attack, curr_attack, curr_hero, scale):
     picked_card = None 
     card_place = False
     while not card_place:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is not None:
+            if card.sigil == "Bioluminescence":
+                pass
+            elif card.sigil == "Swarm":
+                pass
+            elif card.sigil == "Frenzy":
+                pass
+            elif card.sigil == "Barrier":
+                pass
+            elif card.sigil == "Echolocation":
+                print(villian_draw_card(villian, upcoming_attack))
+                print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
+            elif card.sigil == "Swift":
+                pass
+            elif card.sigil == "Shell":
+                pass
+            elif card.sigil == "None":
+                print("This card has no sigil")
             card_place = True
 
         else:
