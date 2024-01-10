@@ -16,20 +16,34 @@ def welcome_message(name):
 
 def main():
     clear_terminal()
-    # delay_print("What is your name, diver? ")
-    # name = input("Name: ")
-    # welcome_message(name)
-    
-    name = "Joe"
+    print("~~~ AquaScrypt ~~~")
+    print("1. New game\n2. Load game\n3. Quit")
+    quit = False 
+    choice = check_input.range_int("Choice: ", 1, 3)
+    if choice == 1:
+        # delay_print("What is your name, diver? ")
+        # name = input("Name: ")
+        # welcome_message(name)
+        #name = "Joe"
+        hero = player.Player(False)
+    elif choice == 2:
+        print("loading game")
+        hero = player.Player(True)
+    else: 
+        quit = True
 
-    hero = player.Player(name)
+    print(f"Well hello, {hero.name}")
+    print("\nHere is your current items: ")
+    hero.display_items()
+    print("\n\nHere is your current deck: ")
+    hero.display_deck()
+    print()
+    
     villian = boss.Boss("Jeff")
     game_map = map.Map()
 
-    # pause()
+    pause()
     clear_terminal()
-    
-    quit = False 
     while not quit :
         print(game_map.show_map(hero.location))
         print("1. Go stright\n2. Go left\n3. Go right\n4. Quit")

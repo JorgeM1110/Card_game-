@@ -1,16 +1,26 @@
 import deck
+import card
 import map
 import random
+import json
 from terminal_utils import clear_terminal, pause, delay_print, delay_input, delay
 
 class Player():
-    def __init__(self, name):
-        self._name = name
-        self._deck = deck.Deck()
-        self._items = []
-        self._location = [5, 2]
-        self._currCost = 0
+    def __init__(self, load=False):
+        if not load:
+            self._name = input("What is your name? ")
+            self._items = []
+            self._location = [5, 2]
+            self._deck = deck.Deck()
+        else:
+            with open("player1.json", "r") as files:
+                data = json.load(files)
+                self._name = data["player_name"]
+                self._items = data["items"]
+                self._location = data["location"]
+                self._deck = [card.Card(**card_data) for card_data in data["deck"]]
 
+        
     @property
     def name(self):
         return self._name
@@ -19,7 +29,7 @@ class Player():
     def location(self):
         return self._location
     
-    def displayItems(self):
+    def display_items(self):
         for item in self._items:
             print(item, end=" ")
 

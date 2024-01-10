@@ -1,0 +1,70 @@
+{
+    "player_name": "Joe",
+    "items": ["Dagger", "Boulder", "Shrimp Bottle "],
+    "location": [5, 2],
+    "deck": [
+        {
+            "name": "Angler",
+            "cost": 1,
+            "power": 2,
+            "max_health": 1,
+            "sigil": "Bioluminescence"
+        },
+        {
+            "name": "Jellyfish",
+            "cost": 2,
+            "power": 1,
+            "max_health": 2,
+            "sigil": "Swarm"
+        },
+        {
+            "name": "Kraken",
+            "cost": 3,
+            "power": 3,
+            "max_health": 4,
+            "sigil": "Frenzy"
+        },
+        {
+            "name": "Leviathan",
+            "cost": 3,
+            "power": 4,
+            "max_health": 4,
+            "sigil": "Frenzy"
+        },
+        {
+            "name": "Manta Ray",
+            "cost": 2,
+            "power": 1,
+            "max_health": 3,
+            "sigil": "Barrier"
+        },
+        {
+            "name": "Shark",
+            "cost": 1,
+            "power": 2,
+            "max_health": 2,
+            "sigil": "None"
+        },
+        {
+            "name": "Dolhpin",
+            "cost": 2,
+            "power": 2,
+            "max_health": 2,
+            "sigil": "Echolocation"
+        },
+        {
+            "name": "Otter",
+            "cost": 1,
+            "power": 1,
+            "max_health": 2,
+            "sigil": "Swift"
+        },
+        {
+            "name": "Turtle",
+            "cost": 1,
+            "power": 1,
+            "max_health": 4,
+            "sigil": "Shell"
+        }
+    ]
+}
