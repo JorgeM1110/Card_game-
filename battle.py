@@ -220,10 +220,9 @@ def heroAttack(curr_hero, curr_attack, scale):
 def use_item(hero_hand, play_deck,curr_hero):
     pass
 
-def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale):
-    picked_card = None 
-    card_place = False
-    while not card_place:
+def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale): 
+    end_sigil = False
+    while not end_sigil:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is not None:
@@ -232,24 +231,26 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
             elif curr_hero[choice - 1].sigil == "Swarm":
                 pass
             elif curr_hero[choice - 1].sigil == "Frenzy":
-                pass
+                if curr_hero[choice - 1].hp is None:
+                    pass
             elif curr_hero[choice - 1].sigil == "Barrier":
                 pass
             elif curr_hero[choice - 1].sigil == "Echolocation":
                 print(villian_draw_card(upcoming_attack))
                 print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
-                card_place = True
+                end_sigil = True
             elif curr_hero[choice - 1].sigil == "Swift":
                 print(f"\n{curr_hero[choice - 1].name} has 50% chance to avoid attack")
                 if random.randint(0, 1) == 1:
                     if curr_attack[choice - 1].power > curr_hero[choice - 1].max_hp or curr_attack[choice - 1].power < curr_hero[choice - 1].max_hp:
                         curr_hero[choice - 1].hp = curr_hero[choice - 1].max_hp
                     else: 
-                        curr_hero[choice - 1].hp = curr_attack[choice - 1].power 
+                        curr_hero[choice - 1].hp = curr_attack[choice - 1].power
+                end_sigil = True 
             elif curr_hero[choice - 1].sigil == "Shell":
                 curr_attack.power //= 2
                 print("\nAll current attck card has half the damage now")
-                card_place = True
+                end_sigil = True
             elif curr_hero[choice - 1].sigil == "None":
                 print("\nThis card has no sigil")
         else:
