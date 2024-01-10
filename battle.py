@@ -232,8 +232,8 @@ def use_sigil(hero_hand, play_deck, villian, upcoming_attack, curr_attack, curr_
             elif card.sigil == "Barrier":
                 pass
             elif card.sigil == "Echolocation":
-                print(villian_draw_card(villian, upcoming_attack))
-                print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
+                    print(villian_draw_card(villian, upcoming_attack))
+                    print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
             elif card.sigil == "Swift":
                 pass
             elif card.sigil == "Shell":
