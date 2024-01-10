@@ -119,6 +119,7 @@ def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
 def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
     """ Draws and sacerfices cards, and attacks villian """
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
+    sigil = False 
     done = False
     while not done:
         print("\n1. Look at your cards \n2. Look at board \n3. Place a card down \n4. Use an item \n5. Use Sigil \n6. End turn")
@@ -134,8 +135,11 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
             use_item(hero_hand, play_deck,curr_hero)
 
         elif choice == 5:
-            use_sigil(hero_hand, play_deck,curr_hero)
-
+            if sigil is False:
+                use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale)
+                sigil = True
+            else: 
+                print("\nYou can only use one sigil per turn, good luck!")
         else:
             villian_play_card(upcoming_attack, curr_attack)
             display_board(upcoming_attack, curr_attack, curr_hero, scale)
@@ -216,32 +220,38 @@ def heroAttack(curr_hero, curr_attack, scale):
 def use_item(hero_hand, play_deck,curr_hero):
     pass
 
-def use_sigil(hero_hand, play_deck, villian, upcoming_attack, curr_attack, curr_hero, scale):
+def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale):
     picked_card = None 
     card_place = False
     while not card_place:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is not None:
-            if card.sigil == "Bioluminescence":
+            if curr_hero[choice - 1].sigil == "Bioluminescence":
                 pass
-            elif card.sigil == "Swarm":
+            elif curr_hero[choice - 1].sigil == "Swarm":
                 pass
-            elif card.sigil == "Frenzy":
+            elif curr_hero[choice - 1].sigil == "Frenzy":
                 pass
-            elif card.sigil == "Barrier":
+            elif curr_hero[choice - 1].sigil == "Barrier":
                 pass
-            elif card.sigil == "Echolocation":
-                    print(villian_draw_card(villian, upcoming_attack))
-                    print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
-            elif card.sigil == "Swift":
-                pass
-            elif card.sigil == "Shell":
-                pass
-            elif card.sigil == "None":
-                print("This card has no sigil")
-            card_place = True
-
+            elif curr_hero[choice - 1].sigil == "Echolocation":
+                print(villian_draw_card(upcoming_attack))
+                print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
+                card_place = True
+            elif curr_hero[choice - 1].sigil == "Swift":
+                print(f"\n{curr_hero[choice - 1].name} has 50% chance to avoid attack")
+                if random.randint(0, 1) == 1:
+                    if curr_attack[choice - 1].power > curr_hero[choice - 1].max_hp or curr_attack[choice - 1].power < curr_hero[choice - 1].max_hp:
+                        curr_hero[choice - 1].hp = curr_hero[choice - 1].max_hp
+                    else: 
+                        curr_hero[choice - 1].hp = curr_attack[choice - 1].power 
+            elif curr_hero[choice - 1].sigil == "Shell":
+                curr_attack.power //= 2
+                print("\nAll current attck card has half the damage now")
+                card_place = True
+            elif curr_hero[choice - 1].sigil == "None":
+                print("\nThis card has no sigil")
         else:
             print("There are no card in that slot, pick somewhere else.")
 
