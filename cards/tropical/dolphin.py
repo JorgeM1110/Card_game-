@@ -3,7 +3,7 @@ import card
 class Dolphin(card.Card):
 
     def __init__(self):
-        name = "Dolhpin"
+        name = "Dolphin"
         cost = 2
         power = 2
         max_hp = 2

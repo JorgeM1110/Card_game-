@@ -27,12 +27,11 @@ def main():
         #name = "Joe"
         hero = player.Player(False)
     elif choice == 2:
-        print("loading game")
         hero = player.Player(True)
     else: 
         quit = True
 
-    print(f"Well hello, {hero.name}")
+    print(f"\nWell hello, {hero.name}")
     print("\nHere is your current items: ")
     hero.display_items()
     print("\n\nHere is your current deck: ")
@@ -57,6 +56,12 @@ def main():
         elif menu_choice == "3":
             move = hero.go_right()
         elif menu_choice == "4":
+            print("Would you like to save your progress?")
+            if check_input.yes_no("Y/N: "):
+                print("Would you like to save in slot 1, 2, or 3")
+                save_choice = check_input.range_int("Choice: ", 1, 3)
+                file_name = f"player{save_choice}"
+                hero.save_game(file_name)
             quit = True 
 
         clear_terminal()

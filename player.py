@@ -3,23 +3,25 @@ import card
 import map
 import random
 import json
+import check_input
 from terminal_utils import clear_terminal, pause, delay_print, delay_input, delay
 
 class Player():
     def __init__(self, load=False):
         if not load:
-            self._name = input("What is your name? ")
+            self._name = input("\nWhat is your name? ")
             self._items = []
             self._location = [5, 2]
             self._deck = deck.Deck()
         else:
-            with open("player1.json", "r") as files:
+            print("\nWhich load file would you like to use 1, 2, or 3")
+            load_choice = check_input.range_int("Choice: ", 1, 3)
+            with open(f"player{load_choice}.json", "r") as files:
                 data = json.load(files)
                 self._name = data["player_name"]
                 self._items = data["items"]
                 self._location = data["location"]
                 self._deck = [card.Card(**card_data) for card_data in data["deck"]]
-
         
     @property
     def name(self):
@@ -38,6 +40,14 @@ class Player():
         for card in self._deck:
             print(f"{count}. {card.name}")
             count += 1
+
+    def save_game(self, file_name):
+        player_data = {
+            "player_name": self._name,
+            "items": self._items,
+            "location": self._location,
+            "deck": [card.serialize() for card in self._deck]
+        }
 
     def shop_item(self):
         print("Welcome to meh shop! \nPick whichever tickles your fancy!\n")
