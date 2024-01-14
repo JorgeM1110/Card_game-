@@ -8,6 +8,8 @@ class MantaRay(card.Card):
         power = 1
         max_hp = 3
         sigil = "Barrier" # Blocks the next attack against it
+        self.barrier = barrier
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil)
 
     def attack(self, entity):

@@ -231,26 +231,40 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
             elif curr_hero[choice - 1].sigil == "Swarm":
                 pass
             elif curr_hero[choice - 1].sigil == "Frenzy":
-                if curr_hero[choice - 1].hp is None:
-                    pass
+                if curr_hero[choice - 1].hp is not None and curr_hero[choice - 1].hp < (curr_hero[choice - 1].max_hp //2):
+                    curr_hero[choice - 1].power *= 2
+                    print(f"\n{curr_hero[choice - 1].name} use Frenzy and now will deals double damage!")
+                    end_sigil = True 
+                else: 
+                    print(f"\n{curr_hero[choice - 1].name} is not low yet, and cannot use Frenzy")
+
             elif curr_hero[choice - 1].sigil == "Barrier":
-                pass
+                if not curr_hero[choice - 1].barrier:
+                    print(f"\n{curr_hero[choice - 1].name} use Barrier and will blocks the next attack!")
+                    curr_hero[choice - 1].barrier = True
+                    end_sigil = True
+                else:
+                    print(f"\n{curr_hero[choice - 1].name} already has a Barrier active.")
+
             elif curr_hero[choice - 1].sigil == "Echolocation":
                 print(villian_draw_card(upcoming_attack))
                 print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
                 end_sigil = True
+
             elif curr_hero[choice - 1].sigil == "Swift":
-                print(f"\n{curr_hero[choice - 1].name} has 50% chance to avoid attack")
+                print(f"\n{curr_hero[choice - 1].name} now has 50% chance to avoid attack")
                 if random.randint(0, 1) == 1:
                     if curr_attack[choice - 1].power > curr_hero[choice - 1].max_hp or curr_attack[choice - 1].power < curr_hero[choice - 1].max_hp:
                         curr_hero[choice - 1].hp = curr_hero[choice - 1].max_hp
                     else: 
                         curr_hero[choice - 1].hp = curr_attack[choice - 1].power
                 end_sigil = True 
+
             elif curr_hero[choice - 1].sigil == "Shell":
                 curr_attack.power //= 2
                 print("\nAll current attck card has half the damage now")
                 end_sigil = True
+
             elif curr_hero[choice - 1].sigil == "None":
                 print("\nThis card has no sigil")
         else:
