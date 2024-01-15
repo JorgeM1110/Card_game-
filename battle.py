@@ -102,11 +102,15 @@ def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
                 scale -= card.power
                 print(f"The villian's {card.name} dealt {card.power} damage to you ")
             else:
-                curr_hero[index].take_damage(curr_attack[index].power)
-                print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
-                if curr_hero[index].hp == 0:
-                    print(f"villian {card.name} has slayed your {curr_hero[index].name}")
-                    curr_hero[index] = None
+                if curr_hero[index].barrier == False:
+                    curr_hero[index].take_damage(curr_attack[index].power)
+                    print("The villian's " + str(curr_attack[index].name) + " dealt " + str(curr_attack[index].power) + " damage to your " + str(curr_hero[index].name))
+                    if curr_hero[index].hp == 0:
+                        print(f"villian {card.name} has slayed your {curr_hero[index].name}")
+                        curr_hero[index] = None
+                else:
+                    print(f"{curr_hero[index].name} has a barrier, and {str(curr_attack[index].name)} dealt 0 damage")
+                    curr_hero[index].barrier = False 
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
 
