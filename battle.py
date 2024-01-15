@@ -227,9 +227,19 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is not None:
             if curr_hero[choice - 1].sigil == "Bioluminescence":
-                pass
+                for card in curr_hero:
+                    if isinstance(card, card.Card) and card.sigil == "Bioluminescence" and card != curr_hero[choice - 1]:
+                        card.power += 1
+                        card.max_hp += 1
+                print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances other abyssal fish cards!")
+                end_sigil = True
+
             elif curr_hero[choice - 1].sigil == "Swarm":
-                pass
+                swarm_clone = 2
+                for i in range(swarm_clone):
+                 
+                    print(f"\n{curr_hero[choice - 1].name} Use Swarm and summons additional copies!")
+                end_sigil = True
             elif curr_hero[choice - 1].sigil == "Frenzy":
                 if curr_hero[choice - 1].hp is not None and curr_hero[choice - 1].hp < (curr_hero[choice - 1].max_hp //2):
                     curr_hero[choice - 1].power *= 2
