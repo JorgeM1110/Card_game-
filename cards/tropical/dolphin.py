@@ -8,7 +8,8 @@ class Dolphin(card.Card):
         power = 2
         max_hp = 2
         sigil = "Echolocation" # See upcoming attack
-        super().__init__(name, cost, power, max_hp, sigil)
+        barrier = None
+        super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):
         entity.take_damage(self._power)

@@ -8,7 +8,8 @@ class Turtle(card.Card):
         power = 1
         max_hp = 4
         sigil = "Shell" # Halfs damage
-        super().__init__(name, cost, power, max_hp, sigil)
+        barrier = None
+        super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):
         entity.take_damage(self._power)
