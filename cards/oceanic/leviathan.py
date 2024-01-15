@@ -8,7 +8,8 @@ class Leviathan(card.Card):
         power = 4
         max_hp = 4
         sigil = "Frenzy" # Deals double damage when low
-        super().__init__(name, cost, power, max_hp, sigil)
+        barrier = None
+        super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):
         entity.take_damage(self._power)
