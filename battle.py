@@ -116,7 +116,7 @@ def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
     villian_draw_card(villian, upcoming_attack)
     return villian_attack(upcoming_attack, curr_attack, curr_hero, scale) 
  
-def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack):
+def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack, villian):
     """ Draws and sacerfices cards, and attacks villian """
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
     sigil = False 
@@ -136,7 +136,7 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
 
         elif choice == 5:
             if sigil is False:
-                use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale)
+                use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale)
                 sigil = True
             else: 
                 print("\nYou can only use one sigil per turn, good luck!")
@@ -220,7 +220,7 @@ def heroAttack(curr_hero, curr_attack, scale):
 def use_item(hero_hand, play_deck,curr_hero):
     pass
 
-def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, scale): 
+def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale): 
     end_sigil = False
     while not end_sigil:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
@@ -236,10 +236,16 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
 
             elif curr_hero[choice - 1].sigil == "Swarm":
                 swarm_clone = 2
-                for i in range(swarm_clone):
-                 
-                    print(f"\n{curr_hero[choice - 1].name} Use Swarm and summons additional copies!")
+                for _ in range(swarm_clone):
+                    clone = curr_hero[choice - 1].copy()
+                    
+                    for i, card in enumerate(curr_hero):
+                        if card is None:
+                            curr_hero[i] = clone
+                            break
+                print(f"\n{curr_hero[choice - 1].name} uses Swarm and summons additional copies of itself!")
                 end_sigil = True
+
             elif curr_hero[choice - 1].sigil == "Frenzy":
                 if curr_hero[choice - 1].hp is not None and curr_hero[choice - 1].hp < (curr_hero[choice - 1].max_hp //2):
                     curr_hero[choice - 1].power *= 2
@@ -257,8 +263,10 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
                     print(f"\n{curr_hero[choice - 1].name} already has a Barrier active.")
 
             elif curr_hero[choice - 1].sigil == "Echolocation":
-                print(villian_draw_card(upcoming_attack))
-                print(display_board(upcoming_attack, curr_attack, curr_hero, scale))
+                print(villian_play_card(upcoming_attack, curr_attack))
+                print(villian_draw_card(villian, upcoming_attack))
+                print(display_board(upcoming_attack.copy(), curr_attack.copy(), curr_hero.copy(), scale))
+                print(f"\n{curr_hero[choice - 1].name} use Echolocation and see upcoming attack!")
                 end_sigil = True
 
             elif curr_hero[choice - 1].sigil == "Swift":
@@ -271,7 +279,9 @@ def use_sigil(hero_hand, play_deck, upcoming_attack, curr_attack, curr_hero, sca
                 end_sigil = True 
 
             elif curr_hero[choice - 1].sigil == "Shell":
-                curr_attack.power //= 2
+                for i in range(len(curr_attack)):
+                    if isinstance(curr_attack[i], int):
+                        curr_attack.power //= 2
                 print("\nAll current attck card has half the damage now")
                 end_sigil = True
 
@@ -312,7 +322,7 @@ def battle(hero, villian):
         else:
             pause()
             print("\n---- Hero Turn ----\n")
-            scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack)
+            scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack,villian)
             turn = 0
 
         
