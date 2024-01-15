@@ -279,11 +279,15 @@ def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale):
                 end_sigil = True 
 
             elif curr_hero[choice - 1].sigil == "Shell":
-                for i in range(len(curr_attack)):
-                    if isinstance(curr_attack[i], int):
-                        curr_attack.power //= 2
-                print("\nAll current attck card has half the damage now")
-                end_sigil = True
+                while not end_sigil:
+                    print("Which current attack card do you want to pick to cut the damage in half? Slot 1, 2, 3, or 4")
+                    choice_2 = check_input.range_int("Enter choice: ", 1, 4)
+                    if curr_attack[choice_2 - 1] is not None:
+                        curr_attack[choice_2 - 1].power //= 2
+                        print(f"\n {curr_attack[choice_2 - 1].name} card has half the damage now")
+                        end_sigil = True
+                    else:
+                        print("There are no card in that slot, pick somewhere else.")
 
             elif curr_hero[choice - 1].sigil == "None":
                 print("\nThis card has no sigil")
