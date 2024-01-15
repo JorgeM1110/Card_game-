@@ -9,7 +9,7 @@ class Card:
         _sigil (string): sigil of the card
     """
 
-    def __init__(self, name, cost, power, max_health, sigil):
+    def __init__(self, name, cost, power, max_health, sigil, barrier):
         """ Initializes attributes """
         self._name = name
         self._cost = cost
@@ -17,6 +17,7 @@ class Card:
         self._max_health = max_health
         self._hp = max_health
         self._sigil = sigil
+        self.barrier = barrier
 
     @property
     def name(self):
