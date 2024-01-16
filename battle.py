@@ -232,7 +232,7 @@ def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale):
         if curr_hero[choice - 1] is not None:
             if curr_hero[choice - 1].sigil == "Bioluminescence":
                 for index, card in enumerate(curr_hero):
-                    if curr_hero[index] is not None or curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken":
+                    if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
                         card.power += 1
                         card.hp += 1
                         print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
