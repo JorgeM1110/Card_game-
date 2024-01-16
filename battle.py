@@ -110,6 +110,7 @@ def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
                         curr_hero[index] = None
                 else:
                     print(f"{curr_hero[index].name} has a barrier, and {str(curr_attack[index].name)} dealt 0 damage")
+                    print(f"{curr_hero[index].name} barrier broke")
                     curr_hero[index].barrier = False 
     display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
@@ -241,7 +242,7 @@ def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale):
             elif curr_hero[choice - 1].sigil == "Swarm":
                 swarm_clone = 2
                 for _ in range(swarm_clone):
-                    clone = curr_hero[choice - 1].copy()
+                    clone = curr_hero[choice - 1].copy() if curr_hero[choice - 1] is not None else None
                     
                     for i, card in enumerate(curr_hero):
                         if card is None:
