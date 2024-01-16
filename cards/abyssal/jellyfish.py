@@ -8,7 +8,7 @@ class Jellyfish(card.Card):
         power = 1
         max_hp = 2
         sigil = "Swarm" # Summons additional coppies of itself when played
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):

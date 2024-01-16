@@ -8,7 +8,7 @@ class Kraken(card.Card):
         power = 3
         max_hp = 4
         sigil = "Frenzy" # Deals double damage when low
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):

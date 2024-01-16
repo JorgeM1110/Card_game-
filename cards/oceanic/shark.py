@@ -8,7 +8,7 @@ class Shark(card.Card):
         power = 2
         max_hp = 2
         sigil = "None"
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):

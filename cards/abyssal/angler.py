@@ -8,7 +8,7 @@ class Angler(card.Card):
         power = 2
         max_hp = 1
         sigil = "Bioluminescence" # Other abyssal fish gets 1+ stat
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):

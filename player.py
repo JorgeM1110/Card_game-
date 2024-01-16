@@ -41,7 +41,7 @@ class Player():
             print(f"{count}. {card.name}")
             count += 1
 
-    def save_game(self, file_name):
+    def load_game(self, file_name):
         player_data = {
             "player_name": self._name,
             "items": self._items,

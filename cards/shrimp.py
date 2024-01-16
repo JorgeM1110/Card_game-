@@ -7,7 +7,7 @@ class Shrimp(card.Card):
         power = 0
         max_hp = 1
         sigil = "None"
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):

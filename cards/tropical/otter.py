@@ -8,7 +8,7 @@ class Otter(card.Card):
         power = 1
         max_hp = 2
         sigil = "Swift" # Chance to avoid attack
-        barrier = None
+        barrier = False
         super().__init__(name, cost, power, max_hp, sigil, barrier)
 
     def attack(self, entity):
