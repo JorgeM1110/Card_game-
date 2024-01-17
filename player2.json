@@ -9,7 +9,7 @@
             "power": 2,
             "max_health": 1,
             "sigil": "Bioluminescence",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Jellyfish",
@@ -17,7 +17,7 @@
             "power": 1,
             "max_health": 2,
             "sigil": "Swarm",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Kraken",
@@ -25,7 +25,7 @@
             "power": 3,
             "max_health": 4,
             "sigil": "Frenzy",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Leviathan",
@@ -33,7 +33,7 @@
             "power": 4,
             "max_health": 4,
             "sigil": "Frenzy",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Manta Ray",
@@ -41,7 +41,7 @@
             "power": 1,
             "max_health": 3,
             "sigil": "Barrier",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Shark",
@@ -49,7 +49,7 @@
             "power": 2,
             "max_health": 2,
             "sigil": "None",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Dolphin",
@@ -57,7 +57,7 @@
             "power": 2,
             "max_health": 2,
             "sigil": "Echolocation",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Otter",
@@ -65,7 +65,7 @@
             "power": 1,
             "max_health": 2,
             "sigil": "Swift",
-            "Barrier": false
+            "barrier": false
         },
         {
             "name": "Turtle",
@@ -73,7 +73,7 @@
             "power": 1,
             "max_health": 4,
             "sigil": "Shell",
-            "Barrier": false
+            "barrier": false
         }
     ]
 }

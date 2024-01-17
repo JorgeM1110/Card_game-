@@ -222,8 +222,15 @@ def heroAttack(curr_hero, curr_attack, scale):
             print(f"No cards placed in slot {index + 1}")
     return scale
 
-def use_item(hero_hand, play_deck,curr_hero):
-    pass
+def use_item(hero_hand, play_deck, curr_hero, scale, item):
+    if item == "Dagger":
+        scale += 1 
+    elif item == "Boulder":
+        boulder = card.Card("Boulder", 0, 0, 5, None, False)
+        hero_hand.append(boulder)
+    elif item == "Shrimp Bottle":
+        shrimp = card.Card("Shrimp", 0, 0, 0, None, False)
+        hero_hand.append(shrimp)
 
 def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale): 
     end_sigil = False
