@@ -243,8 +243,8 @@ def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale):
                     if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
                         curr_hero[index].power += 1
                         curr_hero[index].hp += 1
+                        end_sigil = True
                 print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
-                end_sigil = True
 
             elif curr_hero[choice - 1].sigil == "Swarm":
                 swarm_clone = 2
