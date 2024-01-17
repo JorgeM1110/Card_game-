@@ -76,13 +76,13 @@ def main():
         elif move == 'A':
             hero._deck.sacrifice()
 
-        print("Would you like to save your game?")
-        if check_input.yes_no("Choice: "):
-            print("Would like to save in slot 1, 2, or 3")
-            num = check_input.range_int("Choice: ", 1, 3)
-            hero.save_game(num)
-        else:
-            print("Well alright ... Your funeral")
+        # print("Would you like to save your game?")
+        # if check_input.yes_no("Choice: "):
+        #     print("Would like to save in slot 1, 2, or 3")
+        #     num = check_input.range_int("Choice: ", 1, 3)
+        #     hero.save_game(num)
+        # else:
+        #     print("Well alright ... Your funeral")
         
         print()
 main()
