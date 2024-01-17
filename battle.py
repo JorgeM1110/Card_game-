@@ -268,7 +268,7 @@ def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale):
                     print(f"\n{curr_hero[choice - 1].name} already has a Barrier active.")
 
             elif curr_hero[choice - 1].sigil == "Echolocation":
-                print(villian_play_card(upcoming_attack, curr_attack))
+                print(upcoming_attack)
                 print(villian_draw_card(villian, upcoming_attack))
                 print(display_board(upcoming_attack.copy(), curr_attack.copy(), curr_hero.copy(), scale))
                 print(f"\n{curr_hero[choice - 1].name} use Echolocation and see upcoming attack!")
