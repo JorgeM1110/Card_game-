@@ -48,20 +48,11 @@ def show_hand(hand):
 
     print("~~~~~~~~~~~~~~~~~~~~\n")
 
-def display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale):
+def display_board(upcoming_attack, curr_attack, curr_hero, scale):
     """ hows current board """
     print(f"\nScale: {scale}")
     print("~~~~~~~~ The Board ~~~~~~~~")
-
-    #Delete once done test
-    for index, card in enumerate(hidden_upcoming):
-        if card is None:
-            print("None", end=" ")
-        else:
-            print(card.name, end=" ")
-    print("-> Hidden attack")
-    print()
-
+    counter = 1
     for index, card in enumerate(upcoming_attack):
         if card is None:
             print("None", end=" ")
@@ -70,6 +61,7 @@ def display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scal
     print("-> Upcoming attack")
     print()
 
+    counter = 2
     for index, card in enumerate(curr_attack):
         if card is None:
             print("None", end=" ")
@@ -78,6 +70,7 @@ def display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scal
     print("-> Current attack")
     print()        
     
+    counter = 3
     for index, card in enumerate(curr_hero):
         if card is None:
             print("None", end=" ")
@@ -86,31 +79,22 @@ def display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scal
     print("-> Current hero")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-def villian_draw_card(villian, upcoming_attack, hidden_upcoming):
-    """ Randomly add cards to upcoming_attack and hidden_upcoming """
-    for index, card in enumerate(hidden_upcoming):
-        if random.randint(0, 1) == 1 and hidden_upcoming[index] is None:  
-            hidden_upcoming[index] = villian._deck.draw_card()
+def villian_draw_card(villian, upcoming_attack):
+    """ Randomly add cards to upcoming_attack """
+    for index, card in enumerate(upcoming_attack):
+        if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
+            upcoming_attack[index] = villian._deck.draw_card()
 
-    # for index, card in enumerate(upcoming_attack):
-    #     if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
-    #         upcoming_attack[index] = villian._deck.draw_card()
-
-def villian_play_card(upcoming_attack, curr_attack, hidden_upcoming):
+def villian_play_card(upcoming_attack, curr_attack):
     """ Pushes it to curr_attack"""
+    
     for index in range(len(upcoming_attack)):
         if upcoming_attack[index] is not None and curr_attack[index] is None:
             curr_attack[index] = upcoming_attack[index]
             if upcoming_attack[index] is not None:
                 upcoming_attack[index] = None
-    
-    for index in range(len(hidden_upcoming)):
-        if hidden_upcoming[index] is not None and upcoming_attack[index] is None:
-            upcoming_attack[index] = hidden_upcoming[index]
-            if hidden_upcoming[index] is not None:
-                hidden_upcoming[index] = None
 
-def villian_attack(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale):
+def villian_attack(upcoming_attack, curr_attack, curr_hero, scale):
     """ attacks hero """
     for index, card in enumerate(curr_attack):
         if card is not None:
@@ -128,15 +112,16 @@ def villian_attack(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, sca
                     print(f"{curr_hero[index].name} has a barrier, and {str(curr_attack[index].name)} dealt 0 damage")
                     print(f"{curr_hero[index].name} barrier broke")
                     curr_hero[index].barrier = False 
-    display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
+    display_board(upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
 
-def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, hidden_upcoming, scale):
+def villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale):
     """ Pushes it to curr_attack and attacks hero """
-    villian_draw_card(villian, upcoming_attack, hidden_upcoming)
-    return villian_attack(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale) 
+
+    villian_draw_card(villian, upcoming_attack)
+    return villian_attack(upcoming_attack, curr_attack, curr_hero, scale) 
  
-def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, hidden_upcoming, curr_attack,villian, hero):
+def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack, villian):
     """ Draws and sacerfices cards, and attacks villian """
     draw_card(hero_hand, play_deck, shrimp_count, my_shrimp)
     sigil = False 
@@ -147,29 +132,22 @@ def hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, u
         if choice == 1:
             show_hand(hero_hand)
         elif choice == 2:
-            display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
         elif choice == 3:
             placeCard(hero_hand, curr_hero)
-            display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
         elif choice == 4:
-            if len(hero._items) == 0:
-                print("\nYou have no items")
-            else:
-                print("\nWhich item would you like to use?")
-                count = 1
-                for item in hero._items:
-                    print(f"{count}. {item}")
-                item_choice = check_input.range_int("Choice: ", 1, count)
-                scale = use_item(hero_hand, play_deck, curr_hero, scale, hero._items[item_choice - 1])
+            use_item(hero_hand, play_deck,curr_hero)
+
         elif choice == 5:
             if sigil is False:
-                use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
+                use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale)
                 sigil = True
             else: 
                 print("\nYou can only use one sigil per turn, good luck!")
         else:
-            villian_play_card(upcoming_attack, curr_attack, hidden_upcoming)
-            display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
+            villian_play_card(upcoming_attack, curr_attack)
+            display_board(upcoming_attack, curr_attack, curr_hero, scale)
             done = True
     return heroAttack(curr_hero, curr_attack, scale)
 
@@ -214,12 +192,9 @@ def placeCard(hero_hand, curr_hero):
             print("Which card would you like to sacerfice?")
             #choice_card, index= check_input.choose_card("", curr_hero, return_index=True)
             choice_card, index = choose_card("", curr_hero, return_index=True)
-            if choice_card.name == "Boulder":
-                print("You cannot sacerfice a boulder ... dummy")
-            else:
-                curr_hero[index] = None
-                curr_sac += 1
-                print(f"You have sacerficed {choice_card.name} sacerfices: {curr_sac}/{picked_card.cost}")
+            curr_hero[index] = None
+            curr_sac += 1
+            print(f"You have sacerficed {choice_card.name} sacerfices: {curr_sac}/{picked_card.cost}")
 
     card_place = False
     while not card_place:
@@ -250,18 +225,14 @@ def heroAttack(curr_hero, curr_attack, scale):
 def use_item(hero_hand, play_deck, curr_hero, scale, item):
     if item == "Dagger":
         scale += 1 
-        print("Scale is now ", scale)
     elif item == "Boulder":
         boulder = card.Card("Boulder", 0, 0, 5, None, False)
         hero_hand.append(boulder)
     elif item == "Shrimp Bottle":
         shrimp = card.Card("Shrimp", 0, 0, 0, None, False)
         hero_hand.append(shrimp)
-    else:
-        print("Item is not used")
-    return scale
 
-def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale): 
+def use_sigil(villian, upcoming_attack, curr_attack, curr_hero, scale): 
     end_sigil = False
     while not end_sigil:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
@@ -272,8 +243,9 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
                     if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
                         curr_hero[index].power += 1
                         curr_hero[index].hp += 1
-                        end_sigil = True
+                        print("hello")
                 print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
+                end_sigil = True
 
             elif curr_hero[choice - 1].sigil == "Swarm":
                 swarm_clone = 2
@@ -304,16 +276,11 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
                     print(f"\n{curr_hero[choice - 1].name} already has a Barrier active.")
 
             elif curr_hero[choice - 1].sigil == "Echolocation":
+                print(upcoming_attack)
+                print(villian_draw_card(villian, upcoming_attack))
+                print(display_board(upcoming_attack.copy(), curr_attack.copy(), curr_hero.copy(), scale))
                 print(f"\n{curr_hero[choice - 1].name} use Echolocation and see upcoming attack!")
-                print("Here is the upcoming attack: ")
-                for card in hidden_upcoming:
-                    if card is None:
-                        print(card, end=" ")
-                    else:
-                        print(card.name, end=" ")
-                print()
                 end_sigil = True
-
 
             elif curr_hero[choice - 1].sigil == "Swift":
                 print(f"\n{curr_hero[choice - 1].name} now has 50% chance to avoid attack")
@@ -356,27 +323,23 @@ def battle(hero, villian):
     
     scale = 0
     turn = 0
-    hidden_upcoming = [None, None, None, None]
     upcoming_attack = [None, None, None, None]
     curr_attack =     [None, None, None, None]
-
-    dolhpin = card.Card("Dolphin", 2, 2, 2, "Echolocation", False)
-
-    curr_hero =       [dolhpin, None, None, None]
+    curr_hero =     [None, None, None, None]
 
     while scale > -5 and scale < 5:
         
+
         # villian turn
         if turn == 0:
             print("\n---- Villain Turn ----\n")
-            scale = villian_turn(villian, upcoming_attack, curr_attack, curr_hero, hidden_upcoming, scale)
-            pause()
+            scale = villian_turn(villian, upcoming_attack, curr_attack, curr_hero, scale)
             turn = 1
         # Hero turn
         else:
-            print("\n---- Hero Turn ----\n")
-            scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, hidden_upcoming, curr_attack,villian, hero)
             pause()
+            print("\n---- Hero Turn ----\n")
+            scale = hero_turn(hero_hand, play_deck, shrimp_count, my_shrimp, curr_hero, scale, upcoming_attack, curr_attack,villian)
             turn = 0
 
         
