@@ -92,6 +92,7 @@ def villian_draw_card(villian, upcoming_attack, hidden_upcoming):
         if random.randint(0, 1) == 1 and hidden_upcoming[index] is None:  
             hidden_upcoming[index] = villian._deck.draw_card()
 
+    
     # for index, card in enumerate(upcoming_attack):
     #     if random.randint(0, 1) == 1 and upcoming_attack[index] is None:  
     #         upcoming_attack[index] = villian._deck.draw_card()
@@ -363,6 +364,9 @@ def battle(hero, villian):
     dolhpin = card.Card("Dolphin", 2, 2, 2, "Echolocation", False)
 
     curr_hero =       [dolhpin, None, None, None]
+
+    # Puts card to upcoming attack first turn 
+    # villian_draw_card(villian, upcoming_attack, upcoming_attack)
 
     while scale > -5 and scale < 5:
         
