@@ -2,6 +2,7 @@ import random
 import deck
 import card
 import player
+import copy 
 from boss_file import boss
 from cards import shrimp
 import check_input
@@ -281,14 +282,13 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
                 print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
 
             elif curr_hero[choice - 1].sigil == "Swarm":
-                swarm_clone = 2
-                for _ in range(swarm_clone):
-                    clone = curr_hero[choice - 1].copy() if curr_hero[choice - 1] is not None else None
-                    
-                    for i, card in enumerate(curr_hero):
-                        if card is None:
-                            curr_hero[i] = clone
-                            break
+                clone_limit = 0
+                card_copies = curr_hero[choice - 1]
+                for index, card in enumerate(curr_hero):
+                    if curr_hero[index] is None and clone_limit < 2:
+                        clone = copy.copy(card_copies)
+                        curr_hero[index] = clone
+                        clone_limit +=1 
                 print(f"\n{curr_hero[choice - 1].name} uses Swarm and summons additional copies of itself!")
                 end_sigil = True
 
@@ -318,7 +318,6 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
                         print(card.name, end=" ")
                 print()
                 end_sigil = True
-
 
             elif curr_hero[choice - 1].sigil == "Swift":
                 print(f"\nYour {curr_hero[choice - 1].name} now has 50% chance to avoid attack")
@@ -366,7 +365,7 @@ def battle(hero, villian):
     Angler = card.Card("Angler", 1, 2, 1, "Bioluminescence", False)
     Jellyfish = card.Card("Jellyfish", 2, 1, 2, "Swarm", False)
     Otter = card.Card("Otter", 1, 1, 2, "Swift", False)
-    curr_hero =       [Otter, Otter, None, None]
+    curr_hero =       [None, None, None, None]
 
     # Puts card to upcoming attack first turn 
     # villian_draw_card(villian, upcoming_attack, upcoming_attack)
