@@ -270,10 +270,10 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
         if curr_hero[choice - 1] is not None:
             if curr_hero[choice - 1].sigil == "Bioluminescence":
                 for index, card in enumerate(curr_hero):
-                    if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
+                    if curr_hero[index] is not None and (curr_hero[index].name is "Angler" or curr_hero[index].name is "Jellyfish" or curr_hero[index].name is "Kraken"):
                         curr_hero[index].power += 1
                         curr_hero[index].hp += 1
-                        end_sigil = True
+                end_sigil = True
                 print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
 
             elif curr_hero[choice - 1].sigil == "Swarm":
@@ -362,8 +362,10 @@ def battle(hero, villian):
     curr_attack =     [None, None, None, None]
 
     dolhpin = card.Card("Dolphin", 2, 2, 2, "Echolocation", False)
-
-    curr_hero =       [dolhpin, None, None, None]
+    Angler = card.Card("Angler", 1, 2, 1, "Bioluminescence", False)
+    Jellyfish = card.Card("Jellyfish", 2, 1, 2, "Swarm", False)
+    Otter = card.Card("Otter", 1, 1, 2, "Swarm", False)
+    curr_hero =       [Angler, None, Jellyfish, Angler]
 
     # Puts card to upcoming attack first turn 
     # villian_draw_card(villian, upcoming_attack, upcoming_attack)
