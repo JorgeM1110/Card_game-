@@ -126,9 +126,13 @@ def villian_attack(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, sca
                         print(f"villian {card.name} has slayed your {curr_hero[index].name}")
                         curr_hero[index] = None
                 else:
-                    print(f"{curr_hero[index].name} has a barrier, and {str(curr_attack[index].name)} dealt 0 damage")
-                    print(f"{curr_hero[index].name} barrier broke")
-                    curr_hero[index].barrier = False 
+                    if curr_hero[index].sigil != "Swift":
+                        print(f"Your {curr_hero[index].name} has a barrier, and villian {str(curr_attack[index].name)} dealt 0 damage")
+                        print(f"Your {curr_hero[index].name} barrier broke")
+                        curr_hero[index].barrier = False 
+                    else:
+                        print(f"Your {curr_hero[index].name} has avoid villian {curr_attack[index].name} attack")
+                        curr_hero[index].barrier = False
     display_board(hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale)
     return scale 
 
@@ -270,7 +274,7 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
         if curr_hero[choice - 1] is not None:
             if curr_hero[choice - 1].sigil == "Bioluminescence":
                 for index, card in enumerate(curr_hero):
-                    if curr_hero[index] is not None and (curr_hero[index].name is "Angler" or curr_hero[index].name is "Jellyfish" or curr_hero[index].name is "Kraken"):
+                    if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
                         curr_hero[index].power += 1
                         curr_hero[index].hp += 1
                 end_sigil = True
@@ -317,12 +321,9 @@ def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero,
 
 
             elif curr_hero[choice - 1].sigil == "Swift":
-                print(f"\n{curr_hero[choice - 1].name} now has 50% chance to avoid attack")
+                print(f"\nYour {curr_hero[choice - 1].name} now has 50% chance to avoid attack")
                 if random.randint(0, 1) == 1:
-                    if curr_attack[choice - 1].power > curr_hero[choice - 1].max_hp or curr_attack[choice - 1].power < curr_hero[choice - 1].max_hp:
-                        curr_hero[choice - 1].hp = curr_hero[choice - 1].max_hp
-                    else: 
-                        curr_hero[choice - 1].hp = curr_attack[choice - 1].power
+                    curr_hero[choice - 1].barrier = True   
                 end_sigil = True 
 
             elif curr_hero[choice - 1].sigil == "Shell":
@@ -364,8 +365,8 @@ def battle(hero, villian):
     dolhpin = card.Card("Dolphin", 2, 2, 2, "Echolocation", False)
     Angler = card.Card("Angler", 1, 2, 1, "Bioluminescence", False)
     Jellyfish = card.Card("Jellyfish", 2, 1, 2, "Swarm", False)
-    Otter = card.Card("Otter", 1, 1, 2, "Swarm", False)
-    curr_hero =       [Angler, None, Jellyfish, Angler]
+    Otter = card.Card("Otter", 1, 1, 2, "Swift", False)
+    curr_hero =       [Otter, Otter, None, None]
 
     # Puts card to upcoming attack first turn 
     # villian_draw_card(villian, upcoming_attack, upcoming_attack)
