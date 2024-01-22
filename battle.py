@@ -365,7 +365,7 @@ def battle(hero, villian):
     Angler = card.Card("Angler", 1, 2, 1, "Bioluminescence", False)
     Jellyfish = card.Card("Jellyfish", 2, 1, 2, "Swarm", False)
     Otter = card.Card("Otter", 1, 1, 2, "Swift", False)
-    curr_hero =       [None, None, None, None]
+    curr_hero =       [Angler, Angler, None, None]
 
     # Puts card to upcoming attack first turn 
     # villian_draw_card(villian, upcoming_attack, upcoming_attack)
