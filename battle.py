@@ -269,15 +269,18 @@ def use_item(hero_hand, play_deck, curr_hero, scale, item):
 
 def use_sigil(villian, hidden_upcoming, upcoming_attack, curr_attack, curr_hero, scale): 
     end_sigil = False
+    enhanced_cards = set()
     while not end_sigil:
         print("Which card do you want to use Sigil? Slot 1, 2, 3, or 4")
         choice = check_input.range_int("Enter choice: ", 1, 4)
         if curr_hero[choice - 1] is not None:
             if curr_hero[choice - 1].sigil == "Bioluminescence":
                 for index, card in enumerate(curr_hero):
-                    if curr_hero[index] is not None and (curr_hero[index].name == "Angler" or curr_hero[index].name == "Jellyfish" or curr_hero[index].name == "Kraken"):
-                        curr_hero[index].power += 1
-                        curr_hero[index].hp += 1
+                    if curr_hero[index] is not None:
+                        if curr_hero[index].name in ["Angler", "Jellyfish", "Kraken"] and curr_hero[index].name not in enhanced_cards:
+                            curr_hero[index].power += 1
+                            curr_hero[index].hp += 1
+                            enhanced_cards.add(curr_hero[index].name)
                 end_sigil = True
                 print(f"\n{curr_hero[choice - 1].name} use Bioluminescence and enhances its self, and other abyssal fish cards!")
 
@@ -365,7 +368,7 @@ def battle(hero, villian):
     Angler = card.Card("Angler", 1, 2, 1, "Bioluminescence", False)
     Jellyfish = card.Card("Jellyfish", 2, 1, 2, "Swarm", False)
     Otter = card.Card("Otter", 1, 1, 2, "Swift", False)
-    curr_hero =       [Angler, Angler, None, None]
+    curr_hero =       [None, None, None, None]
 
     # Puts card to upcoming attack first turn 
     # villian_draw_card(villian, upcoming_attack, upcoming_attack)
